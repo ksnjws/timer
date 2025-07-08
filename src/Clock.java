@@ -7,7 +7,7 @@ public class Clock extends Timer {
 
     public Clock() {
         /**
-         *
+         * java.util.TimeZone and java.time.LocalTime are libraries imported to retrieve the system timezone and time of the device in order to display it into the Clock panel in the Timer application.
          */
         LocalTime currentTime = LocalTime.now(); // to retrieve system timezone for clock display
         int hour = currentTime.getHour();

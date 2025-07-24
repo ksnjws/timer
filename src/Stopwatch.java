@@ -6,6 +6,7 @@ public class Stopwatch extends TimerApplication{
     private JButton startButton, stopButton, pauseButton, resetButton;
     private boolean isRunning;
     private long elapsedTime;
+    private long trackedTime;
 
 
     public Stopwatch(int hour, int minute, int second) {

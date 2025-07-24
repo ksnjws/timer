@@ -26,7 +26,7 @@ public class TimerApplication extends JFrame {
         tabbedPane = new JTabbedPane();
 
         setTitle("Timer Application");
-        setSize(500,400);
+        setSize(500,350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 

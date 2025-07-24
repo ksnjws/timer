@@ -15,18 +15,18 @@ public class Clock extends TimerApplication {
 
     }
     public JPanel createClockPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(50, 10, 50, 10));
+        JPanel clockPanel = new JPanel(new BorderLayout());
+        clockPanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 50, 10));
 
         JLabel headerLabel = new JLabel("Current Time", SwingConstants.CENTER);
-        headerLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        headerLabel.setFont(new Font("SansSerif", Font.PLAIN, 18);
 
-        panel.add(headerLabel, BorderLayout.NORTH);
-        panel.add(super.clockLabel, BorderLayout.CENTER);
+        clockPanel.add(headerLabel, BorderLayout.NORTH);
+        clockPanel.add(super.clockLabel, BorderLayout.CENTER);
 
         updateClock(); // Initialize with current time
 
-        return panel;
+        return clockPanel;
     }
 
     private void updateClock() {

@@ -27,6 +27,11 @@ public class Stopwatch extends TimerApplication{
         buttons.add(resetButton);
         stopwatchPanel.add(buttons, BorderLayout.SOUTH);
 
+        startButton.addActionListener(e -> startStopwatch());
+        stopButton.addActionListener(e -> stopStopwatch());
+        pauseButton.addActionListener(e -> pauseStopwatch());
+        resetButton.addActionListener(e -> resetStopwatch());
+
     }
 
     private void startStopwatch() {
@@ -37,6 +42,10 @@ public class Stopwatch extends TimerApplication{
     }
     private void stopStopwatch() {
         isRunning = false;
-        long trackedTime = getElapsedTime / 10000
+        long trackedTime = elapsedTime.get();
+    }
+    private void resetStopwatch() {
+        isRunning = false;
+        elapsedTime = 0;
     }
 }

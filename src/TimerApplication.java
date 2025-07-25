@@ -36,9 +36,10 @@ public class TimerApplication extends JFrame {
         ImageIcon countdownIcon = new ImageIcon();
 
         Clock clock = new Clock(hour, minute, second);
+        Stopwatch stopwatch = new Stopwatch(hour, minute, second);
 
         tabbedPane.addTab("Clock", clockIcon, clock.createClockPanel());
-        // tabbedPane.addTab("Stopwatch", stopwatchIcon, createStopwatchPanel());
+        tabbedPane.addTab("Stopwatch", stopwatchIcon, stopwatch.createStopwatchPanel());
         // tabbedPane.addTab("Countdown", countdownIcon, createCountdownPanel);
 
         add(tabbedPane);

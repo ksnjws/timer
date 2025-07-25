@@ -11,10 +11,11 @@ public class Stopwatch extends TimerApplication{
 
     public Stopwatch(int hour, int minute, int second) {
         super(hour, minute, second);
+    }
 
+    public JPanel createStopwatchPanel(){
         JPanel stopwatchPanel = new JPanel(new BorderLayout());
         stopwatchPanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 50, 10));
-
 
         JPanel buttons = new JPanel();
         startButton = new JButton("Start"); // start tracking time
@@ -33,6 +34,7 @@ public class Stopwatch extends TimerApplication{
         pauseButton.addActionListener(e -> pauseStopwatch());
         resetButton.addActionListener(e -> resetStopwatch());
 
+        return stopwatchPanel;
     }
 
     private void startStopwatch() {
@@ -43,10 +45,13 @@ public class Stopwatch extends TimerApplication{
     }
     private void stopStopwatch() {
         isRunning = false;
-        long trackedTime = elapsedTime.get();
     }
     private void resetStopwatch() {
         isRunning = false;
         elapsedTime = 0;
+    }
+
+    private void updateStopwatch() {
+
     }
 }

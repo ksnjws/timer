@@ -5,7 +5,7 @@ public class Stopwatch extends TimerApplication{
     private JButton startButton, stopButton, pauseButton, resetButton;
     private boolean isRunning;
     private long elapsedTime;
-    private long startTime;
+    private long stopwatchStartTime;
     private long totalSeconds;
     private long trackedHours;
     private long trackedMinutes;
@@ -23,7 +23,7 @@ public class Stopwatch extends TimerApplication{
         stopwatchPanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 50, 10));
 
         stopwatchTimeLabel = new JLabel("00.00.00", SwingConstants.CENTER);
-        stopwatchTimeLabel.setFont(new Font("Monospaced", Font.BOLD,40));
+        stopwatchTimeLabel.setFont(new Font("Monospaced", Font.PLAIN, 40));
         stopwatchPanel.add(stopwatchTimeLabel, BorderLayout.CENTER); // Add to the center of the panel
 
         JPanel buttons = new JPanel();
@@ -51,14 +51,17 @@ public class Stopwatch extends TimerApplication{
             isRunning = true;
 
             startButton.setEnabled(false);
+            stopButton.setEnabled(true);
+            pauseButton.setEnabled(true);
+            resetButton.setEnabled(true);
 
-            startTime = System.currentTimeMillis() - elapsedTime; // allows stopwatch to resume if started previously
+            stopwatchStartTime = System.currentTimeMillis() - elapsedTime; // allows stopwatch to resume if started previously
 
             Thread stopwatchThread = new Thread(new Runnable() { // new stopwatch thread for multitasking
                 @Override // overriding run method in Runnable interface
                 public void run() {
                     while (isRunning) {
-                        elapsedTime = System.currentTimeMillis() - startTime; // elapsed time = currently tracked time minus start time
+                        elapsedTime = System.currentTimeMillis() - stopwatchStartTime; // elapsed time = currently tracked time minus start time
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
                             public void run() {
@@ -78,14 +81,30 @@ public class Stopwatch extends TimerApplication{
         }
     }
     private void pauseStopwatch() {
-        isRunning = false;
+        if (isRunning) {
+            isRunning = false;
+
+            pauseButton.setEnabled(false);
+            startButton.setEnabled(true);
+        }
     }
     private void stopStopwatch() {
         isRunning = false;
     }
     private void resetStopwatch() {
-        isRunning = false;
-        elapsedTime = 0;
+            isRunning = false;
+
+            resetButton.setEnabled(false);
+            startButton.setEnabled(true);
+
+            trackedHours = 0;
+            trackedMinutes = 0;
+            trackedSeconds = 0;
+            elapsedTime = 0;
+            totalSeconds = 0;
+            stopwatchStartTime = 0;
+
+            updateStopwatch();
     }
 
     private void updateStopwatch() {

@@ -47,6 +47,7 @@ public class Stopwatch extends TimerApplication {
         buttons.add(resetButton);
         stopwatchPanel.add(buttons, BorderLayout.SOUTH);
 
+        // Linking each button to corresponding method
         startButton.addActionListener(e -> startStopwatch());
         stopButton.addActionListener(e -> stopStopwatch());
         pauseButton.addActionListener(e -> pauseStopwatch());
@@ -56,10 +57,11 @@ public class Stopwatch extends TimerApplication {
     }
 
     private void startStopwatch() {
-        timerType = "Stopwatch";
+        timerType = "Stopwatch"; // Setting the timer type that will show up in the session logs
         if (!isRunning) {
             isRunning = true;
 
+            // Enabling and disabling buttons
             startButton.setEnabled(false);
             stopButton.setEnabled(true);
             pauseButton.setEnabled(true);
@@ -102,16 +104,18 @@ public class Stopwatch extends TimerApplication {
 
     private void stopStopwatch() {
         if (isRunning) {
-            isRunning = false;
-            updateStopwatch();
+            isRunning = false; // Pause the stopwatch if it is still running
+            updateStopwatch(); // Update the stopwatch display one last time before saving it to the session log
         }
 
+            // Setting up content to be saved to the session log
             LocalDateTime dateTimeTracked = LocalDateTime.now();
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             totalTrackedTime = formattedStopwatchTime;
 
-            stopwatchEntry = String.format("Date: %s | Session Time: %s", dateTimeTracked.format(dateTimeFormatter), totalTrackedTime);
+            stopwatchEntry = String.format("Date/Time: %s | Timer Type: %s | Session Time: %s", dateTimeTracked.format(dateTimeFormatter), timerType, totalTrackedTime);
 
+            // IO exception to write session information to session log
             try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {
                 writer.write(stopwatchEntry + System.lineSeparator());
             } catch (IOException e) {
@@ -123,6 +127,7 @@ public class Stopwatch extends TimerApplication {
             pauseButton.setEnabled(false);
             startButton.setEnabled(true);
 
+            // Resetting stopwatch display to 00.00.00
             hour = 0;
             minute = 0;
             second = 0;
@@ -138,6 +143,7 @@ public class Stopwatch extends TimerApplication {
             resetButton.setEnabled(false);
             startButton.setEnabled(true);
 
+            // Resetting stopwatch display to 00.00.00
             hour = 0;
             minute = 0;
             second = 0;
@@ -150,10 +156,13 @@ public class Stopwatch extends TimerApplication {
 
     private void updateStopwatch() {
         totalSeconds = elapsedTime / 1000;
+
+        // Display elapsed time using inherited hour/minute/second variables
         hour = (int) (totalSeconds / 3600);
         minute = (int) (totalSeconds / 60);
         second = (int) totalSeconds;
 
+        // Setup for stopwatch display
         formattedStopwatchTime = String.format("%02d:%02d:%02d", hour, minute, second);
         stopwatchTimeLabel.setText(formattedStopwatchTime);
 

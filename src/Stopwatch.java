@@ -2,12 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Stopwatch extends TimerApplication{
-    private JLabel displayTime;
     private JButton startButton, stopButton, pauseButton, resetButton;
     private boolean isRunning;
     private long elapsedTime;
     private long startTime;
     private long totalSeconds;
+    private long trackedHours;
+    private long trackedMinutes;
+    private long trackedSeconds;
+    private String formattedStopwatchTime;
+    private JLabel stopwatchTimeLabel;
+
 
     public Stopwatch(int hour, int minute, int second) {
         super(hour, minute, second);
@@ -16,6 +21,10 @@ public class Stopwatch extends TimerApplication{
     public JPanel createStopwatchPanel(){
         JPanel stopwatchPanel = new JPanel(new BorderLayout());
         stopwatchPanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 50, 10));
+
+        stopwatchTimeLabel = new JLabel("00.00.00", SwingConstants.CENTER);
+        stopwatchTimeLabel.setFont(new Font("Monospaced", Font.BOLD,40));
+        stopwatchPanel.add(stopwatchTimeLabel, BorderLayout.CENTER); // Add to the center of the panel
 
         JPanel buttons = new JPanel();
         startButton = new JButton("Start"); // start tracking time
@@ -40,6 +49,8 @@ public class Stopwatch extends TimerApplication{
     private void startStopwatch() {
         if (!isRunning) {
             isRunning = true;
+
+            startButton.setEnabled(false);
 
             startTime = System.currentTimeMillis() - elapsedTime; // allows stopwatch to resume if started previously
 
@@ -78,6 +89,13 @@ public class Stopwatch extends TimerApplication{
     }
 
     private void updateStopwatch() {
+        totalSeconds = elapsedTime / 1000;
+        trackedHours = totalSeconds / 3600;
+        trackedMinutes = totalSeconds / 60;
+        trackedSeconds = totalSeconds;
+
+        formattedStopwatchTime = String.format("%02d:%02d:%02d", trackedHours, trackedMinutes, trackedSeconds);
+        stopwatchTimeLabel.setText(formattedStopwatchTime);
 
     }
 }

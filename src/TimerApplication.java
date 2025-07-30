@@ -54,7 +54,7 @@ public class TimerApplication extends JFrame {
         clockTimer.start();
 
         clockLabel = new JLabel("", SwingConstants.CENTER);
-        clockLabel.setFont(new Font("Arial", Font.BOLD, 40));
+        clockLabel.setFont(new Font("Monospaced", Font.BOLD, 40));
     }
     private void updateClock() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");

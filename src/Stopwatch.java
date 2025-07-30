@@ -12,9 +12,9 @@ public class Stopwatch extends TimerApplication {
     private long elapsedTime;
     private long stopwatchStartTime;
     private long totalSeconds;
-    private long trackedHours;
-    private long trackedMinutes;
-    private long trackedSeconds;
+    //private long trackedHours;
+    //private long trackedMinutes;
+   // private long trackedSeconds;
     private String formattedStopwatchTime;
     private String timerType;
     private JLabel stopwatchTimeLabel;
@@ -104,6 +104,7 @@ public class Stopwatch extends TimerApplication {
         if (isRunning) {
             isRunning = false;
             updateStopwatch();
+        }
 
             LocalDateTime dateTimeTracked = LocalDateTime.now();
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -122,16 +123,14 @@ public class Stopwatch extends TimerApplication {
             pauseButton.setEnabled(false);
             startButton.setEnabled(true);
 
-            trackedHours = 0;
-            trackedMinutes = 0;
-            trackedSeconds = 0;
+            hour = 0;
+            minute = 0;
+            second = 0;
             elapsedTime = 0;
             totalSeconds = 0;
             stopwatchStartTime = 0;
 
             updateStopwatch();
-
-        }
     }
         private void resetStopwatch() {
             isRunning = false;
@@ -139,9 +138,9 @@ public class Stopwatch extends TimerApplication {
             resetButton.setEnabled(false);
             startButton.setEnabled(true);
 
-            trackedHours = 0;
-            trackedMinutes = 0;
-            trackedSeconds = 0;
+            hour = 0;
+            minute = 0;
+            second = 0;
             elapsedTime = 0;
             totalSeconds = 0;
             stopwatchStartTime = 0;
@@ -151,11 +150,11 @@ public class Stopwatch extends TimerApplication {
 
     private void updateStopwatch() {
         totalSeconds = elapsedTime / 1000;
-        trackedHours = totalSeconds / 3600;
-        trackedMinutes = totalSeconds / 60;
-        trackedSeconds = totalSeconds;
+        hour = (int) (totalSeconds / 3600);
+        minute = (int) (totalSeconds / 60);
+        second = (int) totalSeconds;
 
-        formattedStopwatchTime = String.format("%02d:%02d:%02d", trackedHours, trackedMinutes, trackedSeconds);
+        formattedStopwatchTime = String.format("%02d:%02d:%02d", hour, minute, second);
         stopwatchTimeLabel.setText(formattedStopwatchTime);
 
 

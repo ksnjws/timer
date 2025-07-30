@@ -8,9 +8,9 @@ import java.time.LocalTime;
 import java.util.Calendar;
 
 public class TimerApplication extends JFrame {
-    private int hour; // hour field for timer application
-    private int minute; // minute field for timer
-    private int second; // second field for timer
+    protected int hour; // hour field for timer application
+    protected int minute; // minute field for timer
+    protected int second; // second field for timer
 
     private JTabbedPane tabbedPane;
 

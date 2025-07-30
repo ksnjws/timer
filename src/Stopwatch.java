@@ -6,8 +6,8 @@ public class Stopwatch extends TimerApplication{
     private JButton startButton, stopButton, pauseButton, resetButton;
     private boolean isRunning;
     private long elapsedTime;
-    private long trackedTime;
-
+    private long startTime;
+    private long totalSeconds;
 
     public Stopwatch(int hour, int minute, int second) {
         super(hour, minute, second);
@@ -38,7 +38,33 @@ public class Stopwatch extends TimerApplication{
     }
 
     private void startStopwatch() {
-        isRunning = true;
+        if (!isRunning) {
+            isRunning = true;
+
+            startTime = System.currentTimeMillis() - elapsedTime; // allows stopwatch to resume if started previously
+
+            Thread stopwatchThread = new Thread(new Runnable() { // new stopwatch thread for multitasking
+                @Override // overriding run method in Runnable interface
+                public void run() {
+                    while (isRunning) {
+                        elapsedTime = System.currentTimeMillis() - startTime; // elapsed time = currently tracked time minus start time
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateStopwatch(); // update stopwatch display without disrupting UI components
+                            }
+                        });
+                        try {
+                            Thread.sleep(10); // sleep for 10 milliseconds
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+
+                        }
+                    }
+                }
+            });
+            stopwatchThread.start();
+        }
     }
     private void pauseStopwatch() {
         isRunning = false;

@@ -59,7 +59,7 @@ public class TimerApplication extends JFrame {
     private void updateClock() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Calendar cal = Calendar.getInstance();
-        clockLabel.setText(sdf.format(cal.getTime()));
+        clockLabel.setText(sdf.format(cal.getTime())); // displays time (Must be deleted)
     }
 
     public void playSound(){

@@ -11,7 +11,7 @@ public class Clock extends TimerApplication {
 
     public Clock(int hour, int minute, int second) {
         super(hour, minute, second);
-        this.timezone = TimeZone.getDefault().getID();
+        //this.timezone = TimeZone.getDefault().getID();
 
     }
     public JPanel createClockPanel() {

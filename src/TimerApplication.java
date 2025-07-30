@@ -38,8 +38,8 @@ public class TimerApplication extends JFrame {
         Clock clock = new Clock(hour, minute, second);
         Stopwatch stopwatch = new Stopwatch(hour, minute, second);
 
-        tabbedPane.addTab("Clock", clockIcon, clock.createClockPanel());
-        tabbedPane.addTab("Stopwatch", stopwatchIcon, stopwatch.createStopwatchPanel());
+        tabbedPane.addTab("Clock", clock.createClockPanel());
+        tabbedPane.addTab("Stopwatch", stopwatch.createStopwatchPanel());
         // tabbedPane.addTab("Countdown", countdownIcon, createCountdownPanel);
 
         add(tabbedPane);
@@ -54,7 +54,7 @@ public class TimerApplication extends JFrame {
         clockTimer.start();
 
         clockLabel = new JLabel("", SwingConstants.CENTER);
-        clockLabel.setFont(new Font("Monospaced", Font.BOLD, 40));
+        clockLabel.setFont(new Font("Monospaced", Font.PLAIN, 40));
     }
     private void updateClock() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");

@@ -1,7 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.io.FileWriter;
 
-public class Stopwatch extends TimerApplication{
+
+public class Stopwatch extends TimerApplication {
     private JButton startButton, stopButton, pauseButton, resetButton;
     private boolean isRunning;
     private long elapsedTime;
@@ -11,14 +16,18 @@ public class Stopwatch extends TimerApplication{
     private long trackedMinutes;
     private long trackedSeconds;
     private String formattedStopwatchTime;
+    private String timerType;
     private JLabel stopwatchTimeLabel;
+    private String dateTimeTracked;
+    private String totalTrackedTime;
+    private String stopwatchEntry;
 
 
     public Stopwatch(int hour, int minute, int second) {
         super(hour, minute, second);
     }
 
-    public JPanel createStopwatchPanel(){
+    public JPanel createStopwatchPanel() {
         JPanel stopwatchPanel = new JPanel(new BorderLayout());
         stopwatchPanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 50, 10));
 
@@ -28,13 +37,13 @@ public class Stopwatch extends TimerApplication{
 
         JPanel buttons = new JPanel();
         startButton = new JButton("Start"); // start tracking time
-        stopButton = new JButton("Stop"); //save time tracked + reset stopwatch
         pauseButton = new JButton("Pause"); //pause timer without saving data yet
+        stopButton = new JButton("Stop & Save"); //save time tracked + reset stopwatch
         resetButton = new JButton("Reset"); // reset stopwatch without saving time tracked
 
         buttons.add(startButton);
-        buttons.add(stopButton);
         buttons.add(pauseButton);
+        buttons.add(stopButton);
         buttons.add(resetButton);
         stopwatchPanel.add(buttons, BorderLayout.SOUTH);
 
@@ -47,6 +56,7 @@ public class Stopwatch extends TimerApplication{
     }
 
     private void startStopwatch() {
+        timerType = "Stopwatch";
         if (!isRunning) {
             isRunning = true;
 
@@ -80,6 +90,7 @@ public class Stopwatch extends TimerApplication{
             stopwatchThread.start();
         }
     }
+
     private void pauseStopwatch() {
         if (isRunning) {
             isRunning = false;
@@ -88,10 +99,41 @@ public class Stopwatch extends TimerApplication{
             startButton.setEnabled(true);
         }
     }
+
     private void stopStopwatch() {
-        isRunning = false;
+        if (isRunning) {
+            isRunning = false;
+            updateStopwatch();
+
+            LocalDateTime dateTimeTracked = LocalDateTime.now();
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            totalTrackedTime = formattedStopwatchTime;
+
+            stopwatchEntry = String.format("Date: %s | Session Time: %s", dateTimeTracked.format(dateTimeFormatter), totalTrackedTime);
+
+            try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {
+                writer.write(stopwatchEntry + System.lineSeparator());
+            } catch (IOException e) {
+                System.err.println("Error saving time: " + e.getMessage());
+            }
+
+            stopButton.setEnabled(false);
+            resetButton.setEnabled(false);
+            pauseButton.setEnabled(false);
+            startButton.setEnabled(true);
+
+            trackedHours = 0;
+            trackedMinutes = 0;
+            trackedSeconds = 0;
+            elapsedTime = 0;
+            totalSeconds = 0;
+            stopwatchStartTime = 0;
+
+            updateStopwatch();
+
+        }
     }
-    private void resetStopwatch() {
+        private void resetStopwatch() {
             isRunning = false;
 
             resetButton.setEnabled(false);
@@ -105,7 +147,7 @@ public class Stopwatch extends TimerApplication{
             stopwatchStartTime = 0;
 
             updateStopwatch();
-    }
+        }
 
     private void updateStopwatch() {
         totalSeconds = elapsedTime / 1000;
@@ -116,5 +158,7 @@ public class Stopwatch extends TimerApplication{
         formattedStopwatchTime = String.format("%02d:%02d:%02d", trackedHours, trackedMinutes, trackedSeconds);
         stopwatchTimeLabel.setText(formattedStopwatchTime);
 
+
     }
 }
+

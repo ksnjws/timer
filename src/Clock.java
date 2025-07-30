@@ -19,7 +19,7 @@ public class Clock extends TimerApplication {
         clockPanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 50, 10));
 
         JLabel headerLabel = new JLabel("Current Time", SwingConstants.CENTER);
-        headerLabel.setFont(new Font("SansSerif", Font.PLAIN, 18));
+        headerLabel.setFont(new Font("Arial", Font.PLAIN, 18));
 
         clockPanel.add(headerLabel, BorderLayout.NORTH);
         clockPanel.add(super.clockLabel, BorderLayout.CENTER);

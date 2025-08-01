@@ -12,9 +12,6 @@ public class Stopwatch extends TimerApplication {
     private long elapsedTime;
     private long stopwatchStartTime;
     private long totalSeconds;
-    //private long trackedHours;
-    //private long trackedMinutes;
-   // private long trackedSeconds;
     private String formattedStopwatchTime;
     private String timerType;
     private JLabel stopwatchTimeLabel;
@@ -29,10 +26,11 @@ public class Stopwatch extends TimerApplication {
 
     public JPanel createStopwatchPanel() {
         JPanel stopwatchPanel = new JPanel(new BorderLayout());
-        stopwatchPanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 50, 10));
+        stopwatchPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 50, 10));
 
+        // Creating label to display stopwatch elapsed time
         stopwatchTimeLabel = new JLabel("00.00.00", SwingConstants.CENTER);
-        stopwatchTimeLabel.setFont(new Font("Monospaced", Font.PLAIN, 40));
+        stopwatchTimeLabel.setFont(new Font("Arial", Font.PLAIN, 40));
         stopwatchPanel.add(stopwatchTimeLabel, BorderLayout.CENTER); // Add to the center of the panel
 
         // Creating panel for stopwatch buttons

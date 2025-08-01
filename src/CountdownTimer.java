@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CountdownTimer extends TimerApplication {
+    private JLabel countdownTimeLabel;
 
     public CountdownTimer(int hour, int minute, int second) {
         super(hour, minute, second);
@@ -9,7 +10,12 @@ public class CountdownTimer extends TimerApplication {
 
     public JPanel createCountdownPanel() {
         JPanel countdownPanel = new JPanel(new BorderLayout());
-        countdownPanel.setBorder(BorderFactory.createEmptyBorder(60, 10, 60, 10));
+        countdownPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 25, 10));
+
+        // Creating label to display countdown time
+        countdownTimeLabel = new JLabel("00.00.00", SwingConstants.CENTER);
+        countdownTimeLabel.setFont(new Font("Arial", Font.PLAIN, 40));
+        countdownPanel.add(countdownTimeLabel, BorderLayout.CENTER);
 
         // Get user input on hour/minute/second for countdown timer
         JTextField hourInput = new JTextField(2);
@@ -51,8 +57,6 @@ public class CountdownTimer extends TimerApplication {
         stopCountdownButton.addActionListener(e -> stopCountdown());
         resetCountdownButton.addActionListener(e -> resetCountdown());
         setTimeButton.addActionListener(e -> setCountdownTime());
-
-
 
         return countdownPanel;
     }

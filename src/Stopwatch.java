@@ -35,6 +35,7 @@ public class Stopwatch extends TimerApplication {
         stopwatchTimeLabel.setFont(new Font("Monospaced", Font.PLAIN, 40));
         stopwatchPanel.add(stopwatchTimeLabel, BorderLayout.CENTER); // Add to the center of the panel
 
+        // Creating panel for stopwatch buttons
         JPanel buttons = new JPanel();
         startButton = new JButton("Start"); // start tracking time
         pauseButton = new JButton("Pause"); //pause timer without saving data yet

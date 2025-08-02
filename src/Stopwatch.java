@@ -12,12 +12,12 @@ public class Stopwatch extends TimerApplication {
     private long elapsedTime;
     private long stopwatchStartTime;
     private long totalSeconds;
-    private String formattedStopwatchTime;
     private String timerType;
     private JLabel stopwatchTimeLabel;
     private String dateTimeTracked;
     private String totalTrackedTime;
     private String stopwatchEntry;
+    private String formattedStopwatchTime;
 
 
     public Stopwatch(int hour, int minute, int second) {
@@ -82,6 +82,7 @@ public class Stopwatch extends TimerApplication {
                         try {
                             Thread.sleep(10); // sleep for 10 milliseconds
                         } catch (InterruptedException e) {
+                            isRunning = false; // Pause stopwatch if interruption occurs
                             Thread.currentThread().interrupt();
 
                         }

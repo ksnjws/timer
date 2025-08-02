@@ -4,10 +4,14 @@ import java.awt.*;
 public class CountdownTimer extends TimerApplication {
     private JLabel countdownTimeLabel;
     private JSpinner hourSpinner, minuteSpinner, secondSpinner;
+    private int countdownHour, countdownMinute, countdownSecond;
     private boolean timeSet;
     private boolean isRunning;
-    private long totalMilliseconds;
+    private long totalSeconds;
     private JButton setTimeButton, startCountdownButton, pauseCountdownButton, stopCountdownButton, resetCountdownButton;
+    private String timerType;
+    private long timeRemaining;
+    private String formattedCountdownTime;
 
 
     public CountdownTimer(int hour, int minute, int second) {
@@ -65,23 +69,30 @@ public class CountdownTimer extends TimerApplication {
         resetCountdownButton.addActionListener(e -> resetCountdown());
         setTimeButton.addActionListener(e -> setCountdownTime());
 
+        setTimeButton.setEnabled(true);
+        startCountdownButton.setEnabled(false);
+        pauseCountdownButton.setEnabled(false);
+        stopCountdownButton.setEnabled(false);
+        resetCountdownButton.setEnabled(false);
         return countdownPanel;
     }
 
     public void setCountdownTime() {
         if (!timeSet) {
-            // Assigning countdown time values from spinner inputs
-            hour = (int) hourSpinner.getValue();
-            minute = (int) minuteSpinner.getValue();
-            second = (int) secondSpinner.getValue();
+
+            // Assigning original countdown time values to new variables from spinner inputs
+            countdownHour = (int) hourSpinner.getValue();
+            countdownMinute = (int) minuteSpinner.getValue();
+            countdownSecond = (int) secondSpinner.getValue();
 
             // Converting user inputted hour/minute/second into milliseconds and converting the ints into longs
-            totalMilliseconds = ((long) hour * 3600 * 1000 + (long) minute * 60 * 1000 + second * 1000L);
+            totalSeconds = ((long) countdownHour * 3600 + (long) countdownMinute * 60 + (long) countdownSecond);
+
+            // Setting the time remaining to equal to total seconds since updateCountdownTimer() relies on timeRemaining
+            timeRemaining = totalSeconds;
 
             setTimeButton.setEnabled(false);
             startCountdownButton.setEnabled(true);
-            pauseCountdownButton.setEnabled(true);
-            stopCountdownButton.setEnabled(true);
             resetCountdownButton.setEnabled(true);
 
             timeSet = true;
@@ -90,7 +101,42 @@ public class CountdownTimer extends TimerApplication {
     }
 
     public void startCountdown() {
+        timerType = "Countdown Timer";
 
+        if (!isRunning) {
+            isRunning = true;
+
+            timeRemaining = totalSeconds;
+
+            startCountdownButton.setEnabled(false);
+            stopCountdownButton.setEnabled(true);
+            pauseCountdownButton.setEnabled(true);
+            resetCountdownButton.setEnabled(true);
+
+            Thread countdownThread = new Thread(new Runnable() { // countdown thread
+                @Override //overriding run method in Runnable
+                public void run() {
+                    while (isRunning && timeRemaining >= 0) { // While loop
+                        totalSeconds = timeRemaining; //Allows other methods using totalSeconds to update remaining time
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateCountdownTimer();
+                            }
+                        });
+                        try {
+                            Thread.sleep(1000); // sleep for 1000 milliseconds (1 second)
+                            timeRemaining -= 1; // Decrease by 1 second every time the loop runs
+                        } catch (InterruptedException e) {
+                            isRunning = false; // Pause countdown if interruption occurs
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                }
+
+            });
+            countdownThread.start();
+        }
     }
 
     public void pauseCountdown() {
@@ -106,10 +152,10 @@ public class CountdownTimer extends TimerApplication {
         isRunning = false;
 
         // Resetting all time values
-        hour = 0;
-        minute = 0;
-        second = 0;
-        totalMilliseconds = 0;
+        countdownHour = 0;
+        countdownMinute = 0;
+        countdownSecond = 0;
+        totalSeconds = 0;
         hourSpinner.setValue(0);
         minuteSpinner.setValue(0);
         secondSpinner.setValue(0);
@@ -126,6 +172,13 @@ public class CountdownTimer extends TimerApplication {
     }
 
     public void updateCountdownTimer() {
+        // Using inherited hour/minute/second variables to display remaining time
+        hour = (int) (timeRemaining / 3600); //converting seconds to hour
+        minute = (int) ((timeRemaining % 3600) / 60); // converting seconds to minutes
+        second = (int) (timeRemaining % 60);
 
+        // Setup format for countdown display
+        formattedCountdownTime = String.format("%02d:%02d:%02d", hour, minute, second);
+        countdownTimeLabel.setText(formattedCountdownTime);
     }
 }

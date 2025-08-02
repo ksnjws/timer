@@ -4,6 +4,10 @@ import java.awt.*;
 public class CountdownTimer extends TimerApplication {
     private JLabel countdownTimeLabel;
     private JSpinner hourSpinner, minuteSpinner, secondSpinner;
+    private boolean timeSet;
+    private boolean isRunning;
+    private long totalMilliseconds;
+    private JButton setTimeButton, startCountdownButton, pauseCountdownButton, stopCountdownButton, resetCountdownButton;
 
 
     public CountdownTimer(int hour, int minute, int second) {
@@ -26,7 +30,7 @@ public class CountdownTimer extends TimerApplication {
 
         // Creating new panel for countdown time input
         JPanel inputPanel = new JPanel();
-        JButton setTimeButton = new JButton("Set Time");
+        setTimeButton = new JButton("Set Time");
 
         // Adding input fields for hour/minute/second and set time button onto GUI
         inputPanel.add(new JLabel("Hours:"));
@@ -43,10 +47,10 @@ public class CountdownTimer extends TimerApplication {
 
         // Creating new panel for countdown buttons
         JPanel countdownButtons = new JPanel();
-        JButton startCountdownButton = new JButton("Start");
-        JButton pauseCountdownButton = new JButton("Pause");
-        JButton stopCountdownButton = new JButton("Stop & Save");
-        JButton resetCountdownButton = new JButton("Reset");
+        startCountdownButton = new JButton("Start");
+        pauseCountdownButton = new JButton("Pause");
+        stopCountdownButton = new JButton("Stop & Save");
+        resetCountdownButton = new JButton("Reset");
 
         countdownButtons.add(startCountdownButton);
         countdownButtons.add(pauseCountdownButton);
@@ -65,13 +69,24 @@ public class CountdownTimer extends TimerApplication {
     }
 
     public void setCountdownTime() {
+        if (!timeSet) {
+            // Assigning countdown time values from spinner inputs
+            hour = (int) hourSpinner.getValue();
+            minute = (int) minuteSpinner.getValue();
+            second = (int) secondSpinner.getValue();
 
-        // Assigning countdown time values from spinner inputs
-        hour = (int) hourSpinner.getValue();
-        minute = (int) minuteSpinner.getValue();
-        second = (int) secondSpinner.getValue();
+            // Converting user inputted hour/minute/second into milliseconds and converting the ints into longs
+            totalMilliseconds = ((long) hour * 3600 * 1000 + (long) minute * 60 * 1000 + second * 1000L);
 
+            setTimeButton.setEnabled(false);
+            startCountdownButton.setEnabled(true);
+            pauseCountdownButton.setEnabled(true);
+            stopCountdownButton.setEnabled(true);
+            resetCountdownButton.setEnabled(true);
 
+            timeSet = true;
+            updateCountdownTimer();
+        }
     }
 
     public void startCountdown() {
@@ -87,7 +102,27 @@ public class CountdownTimer extends TimerApplication {
     }
 
     public void resetCountdown() {
+        // pausing countdown
+        isRunning = false;
 
+        // Resetting all time values
+        hour = 0;
+        minute = 0;
+        second = 0;
+        totalMilliseconds = 0;
+        hourSpinner.setValue(0);
+        minuteSpinner.setValue(0);
+        secondSpinner.setValue(0);
+        updateCountdownTimer();
+
+        // Disabling all buttons except for setTimeButton
+        setTimeButton.setEnabled(true);
+        startCountdownButton.setEnabled(false);
+        pauseCountdownButton.setEnabled(false);
+        stopCountdownButton.setEnabled(false);
+        resetCountdownButton.setEnabled(false);
+
+        timeSet = false;
     }
 
     public void updateCountdownTimer() {

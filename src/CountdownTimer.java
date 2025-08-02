@@ -3,6 +3,8 @@ import java.awt.*;
 
 public class CountdownTimer extends TimerApplication {
     private JLabel countdownTimeLabel;
+    private JSpinner hourSpinner, minuteSpinner, secondSpinner;
+
 
     public CountdownTimer(int hour, int minute, int second) {
         super(hour, minute, second);
@@ -17,10 +19,10 @@ public class CountdownTimer extends TimerApplication {
         countdownTimeLabel.setFont(new Font("Arial", Font.PLAIN, 40));
         countdownPanel.add(countdownTimeLabel, BorderLayout.CENTER);
 
-        // Get user input on hour/minute/second for countdown timer
-        JTextField hourInput = new JTextField(2);
-        JTextField minuteInput = new JTextField(2);
-        JTextField secondInput = new JTextField(2);
+        // Using spinner to get user input on countdown time and reduce rooms for error
+        hourSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
+        minuteSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+        secondSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
 
         // Creating new panel for countdown time input
         JPanel inputPanel = new JPanel();
@@ -28,12 +30,13 @@ public class CountdownTimer extends TimerApplication {
 
         // Adding input fields for hour/minute/second and set time button onto GUI
         inputPanel.add(new JLabel("Hours:"));
-        inputPanel.add(hourInput);
+        inputPanel.add(hourSpinner);
         inputPanel.add(new JLabel("Minutes:"));
-        inputPanel.add(minuteInput);
+        inputPanel.add(minuteSpinner);
         inputPanel.add(new JLabel("Seconds:"));
-        inputPanel.add(secondInput);
+        inputPanel.add(secondSpinner);
         inputPanel.add(setTimeButton);
+
 
         // Adding input panel to the countdown panel
         countdownPanel.add(inputPanel, BorderLayout.NORTH);
@@ -62,6 +65,12 @@ public class CountdownTimer extends TimerApplication {
     }
 
     public void setCountdownTime() {
+
+        // Assigning countdown time values from spinner inputs
+        hour = (int) hourSpinner.getValue();
+        minute = (int) minuteSpinner.getValue();
+        second = (int) secondSpinner.getValue();
+
 
     }
 

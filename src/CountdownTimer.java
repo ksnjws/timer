@@ -132,6 +132,11 @@ public class CountdownTimer extends TimerApplication {
                             Thread.currentThread().interrupt();
                         }
                     }
+                    if (timeRemaining < 0) {
+                        SwingUtilities.invokeLater(() -> {
+                            autoResetCountdown(); // add method to reset countdown after countdown ends
+                        });
+                    }
                 }
 
             });
@@ -169,6 +174,31 @@ public class CountdownTimer extends TimerApplication {
         resetCountdownButton.setEnabled(false);
 
         timeSet = false;
+    }
+
+    public void autoResetCountdown() { // autoreset method to automatically reset countdown timer after the countdown reaches 0
+        isRunning = false;
+        timeSet = false;
+
+        // resetting all time values
+        countdownHour = 0;
+        countdownMinute = 0;
+        countdownSecond = 0;
+        totalSeconds = 0;
+        timeRemaining = 0;
+        hourSpinner.setValue(0);
+        minuteSpinner.setValue(0);
+        secondSpinner.setValue(0);
+
+        // update countdown display after resetting
+        updateCountdownTimer();
+
+        // disable buttons except for setTimeButton
+        setTimeButton.setEnabled(true);
+        startCountdownButton.setEnabled(false);
+        pauseCountdownButton.setEnabled(false);
+        stopCountdownButton.setEnabled(false);
+        resetCountdownButton.setEnabled(false);
     }
 
     public void updateCountdownTimer() {

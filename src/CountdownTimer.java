@@ -1,5 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CountdownTimer extends TimerApplication {
     private JLabel countdownTimeLabel;
@@ -12,6 +16,7 @@ public class CountdownTimer extends TimerApplication {
     private String timerType;
     private long timeRemaining;
     private String formattedCountdownTime;
+    private long timeCounted;
 
 
     public CountdownTimer(int hour, int minute, int second) {
@@ -116,29 +121,22 @@ public class CountdownTimer extends TimerApplication {
             Thread countdownThread = new Thread(new Runnable() { // countdown thread
                 @Override //overriding run method in Runnable
                 public void run() {
-                    while (isRunning && timeRemaining >= 0) { // While loop
-                        totalSeconds = timeRemaining; //Allows other methods using totalSeconds to update remaining time
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                updateCountdownTimer();
-                            }
-                        });
+                    while (isRunning && timeRemaining > 0) { // While loop
                         try {
                             Thread.sleep(1000); // sleep for 1000 milliseconds (1 second)
                             timeRemaining -= 1; // Decrease by 1 second every time the loop runs
+
+                            SwingUtilities.invokeLater(() -> updateCountdownTimer());
                         } catch (InterruptedException e) {
                             isRunning = false; // Pause countdown if interruption occurs
                             Thread.currentThread().interrupt();
                         }
                     }
-                    if (timeRemaining < 0) {
-                        SwingUtilities.invokeLater(() -> {
-                            autoResetCountdown(); // add method to reset countdown after countdown ends
-                        });
-                    }
+                    SwingUtilities.invokeLater(() -> {
+                        updateCountdownTimer();
+                        stopCountdown(); // add method to reset countdown after countdown ends (when timeRemaining < 0)
+                    });
                 }
-
             });
             countdownThread.start();
         }
@@ -149,7 +147,53 @@ public class CountdownTimer extends TimerApplication {
     }
 
     public void stopCountdown() {
+        if (isRunning) {
+            isRunning = false; // pause countdown if it's still running
+            updateCountdownTimer(); //update countdown display to see remaining time (could be 0, could be more than 0)
+        }
 
+        // disable buttons except for setTime button
+        stopCountdownButton.setEnabled(false);
+        pauseCountdownButton.setEnabled(false);
+        resetCountdownButton.setEnabled(false);
+        setTimeButton.setEnabled(true);
+
+        // Setting up format that session information will be saved as in session log
+        LocalDateTime dateTimeTracked = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // Subtracting the timeRemaining from the original inputted totalSeconds to find the total duration of the session
+        timeCounted = totalSeconds - timeRemaining;
+
+        // using variables to save the duration of the session in hours, minutes, and seconds
+        int savedHours = (int) (timeCounted / 3600); // converting seconds to hours
+        int savedMinutes = (int) ((timeCounted % 3600) / 60); // subtracting hours from minutes
+        int savedSeconds = (int) (timeCounted % 60); // display seconds after subtracting hours and minutes
+
+        // Formatting countdown session log display
+        String timeSaved = String.format("%02d:%02d:%02d", savedHours, savedMinutes, savedSeconds);
+        String countdownEntry = String.format("Date/Time: %s | Timer Type: %s | Session Time: %s", dateTimeTracked.format(dateTimeFormatter), timerType, timeSaved);
+
+        // IO exception to write session information to session log
+        try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {
+            writer.write(countdownEntry + System.lineSeparator());
+        } catch (IOException e) {
+            System.err.println("Error saving session: " + e.getMessage()); // Output error message
+        }
+
+        // Resetting countdown display and time values to 00.00.00
+        countdownHour = 0;
+        countdownMinute = 0;
+        countdownSecond = 0;
+        totalSeconds = 0;
+        timeRemaining = 0;
+        hourSpinner.setValue(0);
+        minuteSpinner.setValue(0);
+        secondSpinner.setValue(0);
+        timeSet = false;
+        isRunning = false;
+
+        updateCountdownTimer();
     }
 
     public void resetCountdown() {
@@ -161,6 +205,7 @@ public class CountdownTimer extends TimerApplication {
         countdownMinute = 0;
         countdownSecond = 0;
         totalSeconds = 0;
+        timeRemaining = 0;
         hourSpinner.setValue(0);
         minuteSpinner.setValue(0);
         secondSpinner.setValue(0);
@@ -176,36 +221,36 @@ public class CountdownTimer extends TimerApplication {
         timeSet = false;
     }
 
-    public void autoResetCountdown() { // autoreset method to automatically reset countdown timer after the countdown reaches 0
-        isRunning = false;
-        timeSet = false;
-
-        // resetting all time values
-        countdownHour = 0;
-        countdownMinute = 0;
-        countdownSecond = 0;
-        totalSeconds = 0;
-        timeRemaining = 0;
-        hourSpinner.setValue(0);
-        minuteSpinner.setValue(0);
-        secondSpinner.setValue(0);
-
-        // update countdown display after resetting
-        updateCountdownTimer();
-
-        // disable buttons except for setTimeButton
-        setTimeButton.setEnabled(true);
-        startCountdownButton.setEnabled(false);
-        pauseCountdownButton.setEnabled(false);
-        stopCountdownButton.setEnabled(false);
-        resetCountdownButton.setEnabled(false);
-    }
+//    public void autoResetCountdown() { // autoreset method to automatically reset countdown timer after the countdown reaches 0
+//        isRunning = false;
+//        timeSet = false;
+//
+//        // resetting all time values
+//        countdownHour = 0;
+//        countdownMinute = 0;
+//        countdownSecond = 0;
+//        totalSeconds = 0;
+//        timeRemaining = 0;
+//        hourSpinner.setValue(0);
+//        minuteSpinner.setValue(0);
+//        secondSpinner.setValue(0);
+//
+//        // update countdown display after resetting
+//        updateCountdownTimer();
+//
+//        // disable buttons except for setTimeButton
+//        setTimeButton.setEnabled(true);
+//        startCountdownButton.setEnabled(false);
+//        pauseCountdownButton.setEnabled(false);
+//        stopCountdownButton.setEnabled(false);
+//        resetCountdownButton.setEnabled(false);
+//    }
 
     public void updateCountdownTimer() {
         // Using inherited hour/minute/second variables to display remaining time
-        hour = (int) (timeRemaining / 3600); //converting seconds to hour
-        minute = (int) ((timeRemaining % 3600) / 60); // converting seconds to minutes
-        second = (int) (timeRemaining % 60);
+        hour = (int) (timeRemaining / 3600); // converting seconds to hours
+        minute = (int) ((timeRemaining % 3600) / 60); // display minutes left after subtracting hours
+        second = (int) (timeRemaining % 60); // display seconds after subtracting minutes and hours
 
         // Setup format for countdown display
         formattedCountdownTime = String.format("%02d:%02d:%02d", hour, minute, second);

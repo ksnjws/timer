@@ -16,7 +16,6 @@ public class Stopwatch extends TimerApplication {
     private JLabel stopwatchTimeLabel;
     private String dateTimeTracked;
     private String totalTrackedTime;
-    private String stopwatchEntry;
     private String formattedStopwatchTime;
 
 
@@ -108,34 +107,34 @@ public class Stopwatch extends TimerApplication {
             updateStopwatch(); // Update the stopwatch display one last time before saving it to the session log
         }
 
-            // Setting up content to be saved to the session log
-            LocalDateTime dateTimeTracked = LocalDateTime.now();
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            totalTrackedTime = formattedStopwatchTime;
+        // Setting up content to be saved to the session log
+        LocalDateTime dateTimeTracked = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        totalTrackedTime = formattedStopwatchTime;
 
-            stopwatchEntry = String.format("Date/Time: %s | Timer Type: %s | Session Time: %s", dateTimeTracked.format(dateTimeFormatter), timerType, totalTrackedTime);
+        String stopwatchEntry = String.format("Date/Time: %s | Timer Type: %s | Session Time: %s", dateTimeTracked.format(dateTimeFormatter), timerType, totalTrackedTime);
 
-            // IO exception to write session information to session log
-            try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {
-                writer.write(stopwatchEntry + System.lineSeparator());
-            } catch (IOException e) {
-                System.err.println("Error saving time: " + e.getMessage());
-            }
+        // IO exception to write session information to session log
+        try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {
+            writer.write(stopwatchEntry + System.lineSeparator());
+        } catch (IOException e) {
+            System.err.println("Error saving session: " + e.getMessage()); // Output error message
+        }
 
-            stopButton.setEnabled(false);
-            resetButton.setEnabled(false);
-            pauseButton.setEnabled(false);
-            startButton.setEnabled(true);
+        stopButton.setEnabled(false);
+        resetButton.setEnabled(false);
+        pauseButton.setEnabled(false);
+        startButton.setEnabled(true);
 
-            // Resetting stopwatch display to 00.00.00
-            hour = 0;
-            minute = 0;
-            second = 0;
-            elapsedTime = 0;
-            totalSeconds = 0;
-            stopwatchStartTime = 0;
+        // Resetting stopwatch display to 00.00.00
+        hour = 0;
+        minute = 0;
+        second = 0;
+        elapsedTime = 0;
+        totalSeconds = 0;
+        stopwatchStartTime = 0;
 
-            updateStopwatch();
+        updateStopwatch();
     }
         private void resetStopwatch() {
             isRunning = false;

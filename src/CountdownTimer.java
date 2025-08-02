@@ -17,6 +17,7 @@ public class CountdownTimer extends TimerApplication {
     private long timeRemaining;
     private String formattedCountdownTime;
     private long timeCounted;
+    private boolean logSaved; // flag to prevent session log saving twice
 
 
     public CountdownTimer(int hour, int minute, int second) {
@@ -85,6 +86,8 @@ public class CountdownTimer extends TimerApplication {
     public void setCountdownTime() {
         if (!timeSet) {
 
+            logSaved = false; // reset logSaved flag for new session
+
             // Assigning original countdown time values to new variables from spinner inputs
             countdownHour = (int) hourSpinner.getValue();
             countdownMinute = (int) minuteSpinner.getValue();
@@ -147,6 +150,12 @@ public class CountdownTimer extends TimerApplication {
     }
 
     public void stopCountdown() {
+        if (logSaved) {
+            return; // exits method if log already saved
+        }
+
+        logSaved = true; // set it to true so it doesn't run twice
+
         if (isRunning) {
             isRunning = false; // pause countdown if it's still running
             updateCountdownTimer(); //update countdown display to see remaining time (could be 0, could be more than 0)

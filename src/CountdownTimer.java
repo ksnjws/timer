@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -61,6 +60,9 @@ public class CountdownTimer extends TimerApplication {
         pauseCountdownButton = new JButton("Pause");
         stopCountdownButton = new JButton("Stop & Save");
         resetCountdownButton = new JButton("Reset");
+
+        JPanel countdownRecord = new JPanel();
+        String[] records = readRecord(); // To display usage history
 
         countdownButtons.add(startCountdownButton);
         countdownButtons.add(pauseCountdownButton);
@@ -230,39 +232,41 @@ public class CountdownTimer extends TimerApplication {
         timeSet = false;
     }
 
-//    public void autoResetCountdown() { // autoreset method to automatically reset countdown timer after the countdown reaches 0
-//        isRunning = false;
-//        timeSet = false;
-//
-//        // resetting all time values
-//        countdownHour = 0;
-//        countdownMinute = 0;
-//        countdownSecond = 0;
-//        totalSeconds = 0;
-//        timeRemaining = 0;
-//        hourSpinner.setValue(0);
-//        minuteSpinner.setValue(0);
-//        secondSpinner.setValue(0);
-//
-//        // update countdown display after resetting
-//        updateCountdownTimer();
-//
-//        // disable buttons except for setTimeButton
-//        setTimeButton.setEnabled(true);
-//        startCountdownButton.setEnabled(false);
-//        pauseCountdownButton.setEnabled(false);
-//        stopCountdownButton.setEnabled(false);
-//        resetCountdownButton.setEnabled(false);
-//    }
-
     public void updateCountdownTimer() {
         // Using inherited hour/minute/second variables to display remaining time
-        hour = (int) (timeRemaining / 3600); // converting seconds to hours
-        minute = (int) ((timeRemaining % 3600) / 60); // display minutes left after subtracting hours
-        second = (int) (timeRemaining % 60); // display seconds after subtracting minutes and hours
+
+        // Preventing any negatives in the hour/minute/second display using math.max
+        hour = (int) (Math.max(timeRemaining, 0) / 3600); // converting seconds to hours
+        minute = (int) ((Math.max(timeRemaining, 0) % 3600) / 60); // display minutes left after subtracting hours
+        second = (int) (Math.max(timeRemaining, 0) % 60); // display seconds after subtracting minutes and hours
 
         // Setup format for countdown display
         formattedCountdownTime = String.format("%02d:%02d:%02d", hour, minute, second);
         countdownTimeLabel.setText(formattedCountdownTime);
+    }
+
+    private static String[] readRecord() {
+        try {
+            FileReader fileReader = new FileReader("Timer-Log.txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            try {
+                String line;
+                String[] records = new String[100];
+                int i = 0;
+
+                while ((line = bufferedReader.readLine()) != null) {
+                     records[i] = line;
+                     i++;
+                }
+                return records;
+
+            } catch (IOException e) {
+                System.out.println("IO error");
+                return new String[100]; // return empty array
+            }
+        } catch (FileNotFoundException e){
+            System.out.println("File not found");
+            return new String[100];
+        }
     }
 }

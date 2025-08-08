@@ -12,7 +12,6 @@ public class CountdownTimer extends TimerApplication {
     private boolean isRunning;
     private long totalSeconds;
     private JButton setTimeButton, startCountdownButton, pauseCountdownButton, stopCountdownButton, resetCountdownButton;
-    private String timerType;
     private long timeRemaining;
     private String formattedCountdownTime;
     private long timeCounted;
@@ -21,6 +20,7 @@ public class CountdownTimer extends TimerApplication {
 
     public CountdownTimer(int hour, int minute, int second) {
         super(hour, minute, second);
+        timerType = TimerType.COUNTDOWN; // setting enum value for countdown timer
     }
 
     public JPanel createCountdownPanel() {
@@ -111,7 +111,6 @@ public class CountdownTimer extends TimerApplication {
     }
 
     public void startCountdown() {
-        timerType = "Countdown Timer";
 
         if (!isRunning) {
             isRunning = true;
@@ -176,14 +175,17 @@ public class CountdownTimer extends TimerApplication {
         // Subtracting the timeRemaining from the original inputted totalSeconds to find the total duration of the session
         timeCounted = totalSeconds - timeRemaining;
 
-        // using variables to save the duration of the session in hours, minutes, and seconds
-        int savedHours = (int) (timeCounted / 3600); // converting seconds to hours
-        int savedMinutes = (int) ((timeCounted % 3600) / 60); // subtracting hours from minutes
-        int savedSeconds = (int) (timeCounted % 60); // display seconds after subtracting hours and minutes
 
+        // CAN BE DELETED AFTER CHECKED
+        // using variables to save the duration of the session in hours, minutes, and seconds
+        // int savedHours = (int) (timeCounted / 3600); // converting seconds to hours
+        // int savedMinutes = (int) ((timeCounted % 3600) / 60); // subtracting hours from minutes
+        // int savedSeconds = (int) (timeCounted % 60); // display seconds after subtracting hours and minutes
         // Formatting countdown session log display
-        String timeSaved = String.format("%02d:%02d:%02d", savedHours, savedMinutes, savedSeconds);
-        String countdownEntry = String.format("Date/Time: %s | Timer Type: %s | Session Time: %s", dateTimeTracked.format(dateTimeFormatter), timerType, timeSaved);
+        // String timeSaved = String.format("%02d:%02d:%02d", savedHours, savedMinutes, savedSeconds);
+
+        // more concise output in log separated by commas for bufferedreader to read
+        String countdownEntry = String.format("%s,%d,%d", dateTimeTracked.format(dateTimeFormatter), timerType.getInt(),timeCounted);
 
         // IO exception to write session information to session log
         try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {

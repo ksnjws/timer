@@ -11,6 +11,7 @@ public class TimerApplication extends JFrame {
     protected int hour; // hour field for timer application
     protected int minute; // minute field for timer
     protected int second; // second field for timer
+    protected TimerType timerType;
 
     private JTabbedPane tabbedPane;
 
@@ -57,6 +58,22 @@ public class TimerApplication extends JFrame {
         clockLabel = new JLabel("", SwingConstants.CENTER);
         clockLabel.setFont(new Font("Monospaced", Font.PLAIN, 40));
     }
+
+    public enum TimerType { // using enum to store timer type when stored into a txt file
+        COUNTDOWN(0),
+        STOPWATCH(1); // setting integer values for each timertype
+
+        private final int i; // using i to store the integer values
+
+        TimerType(int i) {
+            this.i = i;
+        }
+
+        int getInt() { // method to retrieve timertype integer value
+            return i;
+        }
+    }
+
     private void updateClock() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Calendar cal = Calendar.getInstance();

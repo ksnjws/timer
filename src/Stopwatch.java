@@ -12,7 +12,6 @@ public class Stopwatch extends TimerApplication {
     private long elapsedTime;
     private long stopwatchStartTime;
     private long totalSeconds;
-    private String timerType;
     private JLabel stopwatchTimeLabel;
     private String dateTimeTracked;
     private String totalTrackedTime;
@@ -21,6 +20,7 @@ public class Stopwatch extends TimerApplication {
 
     public Stopwatch(int hour, int minute, int second) {
         super(hour, minute, second);
+        timerType = TimerType.STOPWATCH; // setting emum value for stopwatch
     }
 
     public JPanel createStopwatchPanel() {
@@ -55,7 +55,6 @@ public class Stopwatch extends TimerApplication {
     }
 
     private void startStopwatch() {
-        timerType = "Stopwatch"; // Setting the timer type that will show up in the session logs
         if (!isRunning) {
             isRunning = true;
 
@@ -110,9 +109,13 @@ public class Stopwatch extends TimerApplication {
         // Setting up content to be saved to the session log
         LocalDateTime dateTimeTracked = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        totalTrackedTime = formattedStopwatchTime;
 
-        String stopwatchEntry = String.format("Date/Time: %s | Timer Type: %s | Session Time: %s", dateTimeTracked.format(dateTimeFormatter), timerType, totalTrackedTime);
+        // CAN BE DELETED AFTER CHECKED
+        //totalTrackedTime = formattedStopwatchTime;
+
+        String stopwatchEntry = String.format("%s,%d,%d", dateTimeTracked.format(dateTimeFormatter), timerType.getInt(),totalSeconds);
+
+        //String stopwatchEntry = String.format("Date/Time: %s | Timer Type: %s | Session Time: %s", dateTimeTracked.format(dateTimeFormatter), timerType, totalTrackedTime);
 
         // IO exception to write session information to session log
         try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {

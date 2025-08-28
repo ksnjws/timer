@@ -1,20 +1,2 @@
-Date: 2025-07-30 21:51:55 | Timer Type: Stopwatch | Session Time: 00:00:01
-Date & Time: 2025-07-30 21:52:30 | Timer Type: null | Session Time: null
-Date & Time: 2025-07-30 21:52:39 | Timer Type: Stopwatch | Session Time: 00:00:02
-Date/Time: 2025-08-01 19:24:14 | Timer Type: Stopwatch | Session Time: 00:00:05
-Date/Time: 2025-08-01 19:42:34 | Timer Type: Stopwatch | Session Time: 00:00:31
-Date/Time: 2025-08-02 23:49:19 | Timer Type: Countdown Timer | Session Time: 00:00:00
-Date/Time: 2025-08-02 23:49:20 | Timer Type: Countdown Timer | Session Time: 00:00:01
-Date/Time: 2025-08-02 23:50:30 | Timer Type: Countdown Timer | Session Time: 00:00:00
-Date/Time: 2025-08-02 23:50:30 | Timer Type: Countdown Timer | Session Time: 00:00:01
-Date/Time: 2025-08-03 00:01:25 | Timer Type: Countdown Timer | Session Time: 00:00:02
-Date/Time: 2025-08-03 00:01:26 | Timer Type: Countdown Timer | Session Time: 00:00:01
-Date/Time: 2025-08-03 00:09:45 | Timer Type: Countdown Timer | Session Time: 00:00:02
-Date/Time: 2025-08-03 00:09:46 | Timer Type: Countdown Timer | Session Time: 00:00:01
-Date/Time: 2025-08-03 00:13:21 | Timer Type: Countdown Timer | Session Time: 00:00:01
-Date/Time: 2025-08-03 00:20:28 | Timer Type: Countdown Timer | Session Time: 00:00:01
-Date/Time: 2025-08-03 00:21:52 | Timer Type: Countdown Timer | Session Time: 00:01:00
-Date/Time: 2025-08-03 10:51:18 | Timer Type: Stopwatch | Session Time: 00:00:12
-Date/Time: 2025-08-08 14:52:23 | Timer Type: Stopwatch | Session Time: 00:00:03
 2025-08-08 23:13:28,0,3
 2025-08-08 23:15:59,1,4

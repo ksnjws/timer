@@ -7,12 +7,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
 
+
 public class TimerApplication extends JFrame {
     protected int hour; // hour field for timer application
     protected int minute; // minute field for timer
     protected int second; // second field for timer
-    protected TimerType timerType;
-
     private JTabbedPane tabbedPane;
 
     private javax.swing.Timer clockTimer;
@@ -30,11 +29,6 @@ public class TimerApplication extends JFrame {
         setSize(500,350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-
-        ImageIcon clockIcon = new ImageIcon(); // image file for tab icons
-        ImageIcon stopwatchIcon = new ImageIcon();
-        ImageIcon countdownIcon = new ImageIcon();
 
         Clock clock = new Clock(hour, minute, second);
         Stopwatch stopwatch = new Stopwatch(hour, minute, second);
@@ -59,20 +53,6 @@ public class TimerApplication extends JFrame {
         clockLabel.setFont(new Font("Monospaced", Font.PLAIN, 40));
     }
 
-    public enum TimerType { // using enum to store timer type when stored into a txt file
-        COUNTDOWN(0),
-        STOPWATCH(1); // setting integer values for each timertype
-
-        private final int i; // using i to store the integer values
-
-        TimerType(int i) {
-            this.i = i;
-        }
-
-        int getInt() { // method to retrieve timertype integer value
-            return i;
-        }
-    }
 
     private void updateClock() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");

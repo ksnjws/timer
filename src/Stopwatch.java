@@ -7,6 +7,7 @@ import java.io.FileWriter;
 
 
 public class Stopwatch extends TimerApplication {
+    public static final TimerType timerType = TimerType.STOPWATCH; // setting enum value for stopwatch
     private JButton startButton, stopButton, pauseButton, resetButton;
     private boolean isRunning;
     private long elapsedTime;
@@ -20,7 +21,6 @@ public class Stopwatch extends TimerApplication {
 
     public Stopwatch(int hour, int minute, int second) {
         super(hour, minute, second);
-        timerType = TimerType.STOPWATCH; // setting emum value for stopwatch
     }
 
     public JPanel createStopwatchPanel() {

@@ -175,15 +175,6 @@ public class CountdownTimer extends TimerApplication {
         // Subtracting the timeRemaining from the original inputted totalSeconds to find the total duration of the session
         timeCounted = totalSeconds - timeRemaining;
 
-
-        // CAN BE DELETED AFTER CHECKED
-        // using variables to save the duration of the session in hours, minutes, and seconds
-        // int savedHours = (int) (timeCounted / 3600); // converting seconds to hours
-        // int savedMinutes = (int) ((timeCounted % 3600) / 60); // subtracting hours from minutes
-        // int savedSeconds = (int) (timeCounted % 60); // display seconds after subtracting hours and minutes
-        // Formatting countdown session log display
-        // String timeSaved = String.format("%02d:%02d:%02d", savedHours, savedMinutes, savedSeconds);
-
         // more concise output in log separated by commas for bufferedreader to read
         String countdownEntry = String.format("%s,%d,%d", dateTimeTracked.format(dateTimeFormatter), timerType.getInt(),timeCounted);
 

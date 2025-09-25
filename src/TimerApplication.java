@@ -36,7 +36,7 @@ public class TimerApplication extends JFrame {
 
         tabbedPane.addTab("Clock", clock.createClockPanel());
         tabbedPane.addTab("Stopwatch", stopwatch.createStopwatchPanel());
-        tabbedPane.addTab("Countdown", countdownIcon, countdownTimer.createCountdownPanel());
+        tabbedPane.addTab("Countdown", countdownTimer.createCountdownPanel());
 
         add(tabbedPane);
     }
@@ -70,11 +70,14 @@ public class TimerApplication extends JFrame {
             clipPlayer.start(); // Play audio clip
 
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace(); // Log error to System.err
+            System.out.println("Sound cannot be played");
+            //TODO should i use a normal error output or printStackTrace
+            //e.printStackTrace(); // Log error to System.err
 
         }
     }
 
+    //TODO is this needed? (variables are unused)
     public static void main(String[] args) {
         LocalTime currentTime = LocalTime.now(); // to retrieve system timezone for clock display
         int hour = currentTime.getHour();

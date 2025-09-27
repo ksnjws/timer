@@ -30,7 +30,7 @@ public class Stopwatch extends TimerApplication {
         // Creating label to display stopwatch elapsed time
         stopwatchTimeLabel = new JLabel("00.00.00", SwingConstants.CENTER);
         stopwatchTimeLabel.setFont(new Font("Arial", Font.PLAIN, 40));
-        stopwatchPanel.add(stopwatchTimeLabel, BorderLayout.CENTER); // Add to the center of the panel
+        stopwatchPanel.add(stopwatchTimeLabel, BorderLayout.NORTH); // Add to the center of the panel
 
         // Creating panel for stopwatch buttons
         JPanel buttons = new JPanel();
@@ -43,7 +43,18 @@ public class Stopwatch extends TimerApplication {
         buttons.add(pauseButton);
         buttons.add(stopButton);
         buttons.add(resetButton);
-        stopwatchPanel.add(buttons, BorderLayout.SOUTH);
+        stopwatchPanel.add(buttons, BorderLayout.CENTER);
+
+        JPanel logDisplay = new JPanel(new GridLayout(0,1));
+        for (TimerRecord timerRecord : TimerRecord.timerRecords) {
+            if (timerRecord == null){
+                break;
+            }
+            String record = String.format("Date: %s, %s seconds", timerRecord.getDateTime().toString(), timerRecord.getSessionTime());
+            JTextField textField = new JTextField(record);
+            logDisplay.add(textField);
+        }
+        stopwatchPanel.add(logDisplay, BorderLayout.SOUTH);
 
         // Linking each button to corresponding method
         startButton.addActionListener(e -> startStopwatch());

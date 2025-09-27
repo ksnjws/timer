@@ -62,7 +62,6 @@ public class CountdownTimer extends TimerApplication {
         resetCountdownButton = new JButton("Reset");
 
         JPanel countdownRecord = new JPanel();
-        TimerRecord[] records = readRecord(); // To display usage history
 
         countdownButtons.add(startCountdownButton);
         countdownButtons.add(pauseCountdownButton);
@@ -237,33 +236,7 @@ public class CountdownTimer extends TimerApplication {
         countdownTimeLabel.setText(formattedCountdownTime);
     }
 
-    private static TimerRecord[] readRecord() {
-        try {
-            FileReader fileReader = new FileReader("Timer-Log.txt");
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            try {
-                String line;
-                int i = 0;
 
-                TimerRecord[] countdownRecords = new TimerRecord[100];
-                while ((line = bufferedReader.readLine()) != null) {
-                     String[] parts = line.split(","); // splitting timerlog line
-
-                    if (Integer.parseInt(parts[1]) == timerType.getInt()) { // only taking countdown records with countdown enum
-                        countdownRecords[i] = new TimerRecord(parts[0], timerType, parts[2]);
-                    }
-                }
-                 return countdownRecords;
-
-            } catch (IOException e) {
-                System.out.println("IO error");
-                return new TimerRecord[100]; // return empty array
-            }
-        } catch (FileNotFoundException e){
-            System.out.println("File not found");
-            return new TimerRecord[100];
-        }
-    }
 }
 
 //TODO add playSound method

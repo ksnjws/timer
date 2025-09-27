@@ -11,4 +11,13 @@ public enum TimerType {
     int getInt() { // method to retrieve timertype integer value
         return i;
     }
+
+    public static TimerType fromInt(int i) {
+        for (TimerType timerType : TimerType.values()) {
+            if (timerType.getInt() == i) {
+                return timerType;
+            }
+        }
+        throw new IllegalArgumentException("Invalid timer type " + i);
+    }
 }

@@ -23,6 +23,8 @@ public class TimerApplication extends JFrame {
         this.minute = 0;
         this.second = 0;
 
+        TimerRecord.readRecord();
+
         tabbedPane = new JTabbedPane();
 
         setTitle("Timer Application");

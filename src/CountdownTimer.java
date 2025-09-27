@@ -170,13 +170,12 @@ public class CountdownTimer extends TimerApplication {
 
         // Setting up format that session information will be saved as in session log
         LocalDateTime dateTimeTracked = LocalDateTime.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         // Subtracting the timeRemaining from the original inputted totalSeconds to find the total duration of the session
         timeCounted = totalSeconds - timeRemaining;
 
         // more concise output in log separated by commas for bufferedreader to read
-        String countdownEntry = String.format("%s,%d,%d", dateTimeTracked.format(dateTimeFormatter), timerType.getInt(),timeCounted);
+        String countdownEntry = String.format("%s,%d,%d", dateTimeTracked.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), timerType.getInt(),timeCounted);
 
         // IO exception to write session information to session log
         try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {

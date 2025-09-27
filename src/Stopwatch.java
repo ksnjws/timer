@@ -109,12 +109,9 @@ public class Stopwatch extends TimerApplication {
 
         // Setting up content to be saved to the session log
         LocalDateTime dateTimeTracked = LocalDateTime.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-        // CAN BE DELETED AFTER CHECKED
-        //totalTrackedTime = formattedStopwatchTime;
 
-        String stopwatchEntry = String.format("%s,%d,%d", dateTimeTracked.format(dateTimeFormatter), timerType.getInt(),totalSeconds);
+        String stopwatchEntry = String.format("%s,%d,%d", dateTimeTracked.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), timerType.getInt(),totalSeconds);
 
         //String stopwatchEntry = String.format("Date/Time: %s | Timer Type: %s | Session Time: %s", dateTimeTracked.format(dateTimeFormatter), timerType, totalTrackedTime);
 

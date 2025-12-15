@@ -234,6 +234,7 @@ public class CountdownTimer extends TimerApplication {
         // Setup format for countdown display
         formattedCountdownTime = String.format("%02d:%02d:%02d", hour, minute, second);
         countdownTimeLabel.setText(formattedCountdownTime);
+        //a
     }
 
 

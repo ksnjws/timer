@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -9,9 +6,9 @@ public class TimerRecord {
     public static TimerRecord[] timerRecords = new TimerRecord[100];
     private LocalDateTime dateTime;
     private TimerType timerType;
-    private String sessionTime;
+    private long sessionTime;
 
-    public TimerRecord(String dateTime, TimerType timerType, String sessionTime) {
+    public TimerRecord(String dateTime, TimerType timerType, long sessionTime) {
         this.dateTime = LocalDateTime.parse(dateTime);
         this.timerType = timerType;
         this.sessionTime = sessionTime;
@@ -23,8 +20,22 @@ public class TimerRecord {
     public TimerType getTimerType(){
         return timerType;
     }
-    public String getSessionTime(){
+    public long getSessionTime(){
         return sessionTime;
+    }
+
+    public static void saveRecord(TimerType type, long sessionTime){
+        // Setting up format that session information will be saved as in session log
+        LocalDateTime dateTimeTracked = LocalDateTime.now();
+
+        // more concise output in log separated by commas for bufferedreader to read
+        String timerEntry = String.format("%s,%d,%d", dateTimeTracked.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), type.getInt(), sessionTime);
+
+        try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {
+            writer.write(timerEntry + System.lineSeparator());
+        } catch (IOException e) {
+            System.err.println("Error saving session: " + e.getMessage()); // Output error message
+        }
     }
 
     protected static void readRecord() {
@@ -38,8 +49,13 @@ public class TimerRecord {
                 while ((line = bufferedReader.readLine()) != null) {
                     String[] parts = line.split(","); // splitting timerlog line
 
-                        timerRecords[i] = new TimerRecord(parts[0], TimerType.fromInt(Integer.parseInt(parts[1])), parts[2]);
+                    try {
+                        // converting formats in timerRecord object
+                        timerRecords[i] = new TimerRecord(parts[0], TimerType.fromInt(Integer.parseInt(parts[1])), Long.parseLong(parts[2].trim()));
                         i++;
+                    } catch (Exception parseE) {
+                        System.err.println("Parsing error");
+                    }
                 }
 
             } catch (IOException e) {

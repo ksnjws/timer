@@ -168,20 +168,23 @@ public class CountdownTimer extends TimerApplication {
         setTimeButton.setEnabled(true);
 
         // Setting up format that session information will be saved as in session log
-        LocalDateTime dateTimeTracked = LocalDateTime.now();
+        //LocalDateTime dateTimeTracked = LocalDateTime.now();
 
         // Subtracting the timeRemaining from the original inputted totalSeconds to find the total duration of the session
         timeCounted = totalSeconds - timeRemaining;
 
+        // Saving record using TimerRecord saveRecord method
+        TimerRecord.saveRecord(timerType, timeCounted);
+
         // more concise output in log separated by commas for bufferedreader to read
-        String countdownEntry = String.format("%s,%d,%d", dateTimeTracked.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), timerType.getInt(),timeCounted);
+        //String countdownEntry = String.format("%s,%d,%d", dateTimeTracked.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), timerType.getInt(),timeCounted);
 
         // IO exception to write session information to session log
-        try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {
-            writer.write(countdownEntry + System.lineSeparator());
-        } catch (IOException e) {
-            System.err.println("Error saving session: " + e.getMessage()); // Output error message
-        }
+        //try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {
+        //    writer.write(countdownEntry + System.lineSeparator());
+        //} catch (IOException e) {
+        //    System.err.println("Error saving session: " + e.getMessage()); // Output error message
+        //}
 
         // Resetting countdown display and time values to 00.00.00
         countdownHour = 0;

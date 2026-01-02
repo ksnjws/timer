@@ -66,7 +66,36 @@ public class TimerRecord {
         }
     }
 
-    //public static TimerRecord[] sortRecords(TimerRecord[] timerRecords) {
-    // TODO sort
-    //}
+    // bubble sort to sort timerRecords array contents by date and time in descending order (from most recent)
+    public static TimerRecord[] sortRecordsByDateTime(TimerRecord[] timerRecords) {
+        //should i include boolean sorted
+        for (int i = 0; i < timerRecords.length; i++) {
+            for (int j = 1; j < timerRecords.length - i; j++) { // is this sorting correct
+                if (timerRecords[j].getDateTime().isBefore(timerRecords[j-1].getDateTime())) {
+                    TimerRecord temp = timerRecords[j];
+                    timerRecords[j] = timerRecords[j-1];
+                    timerRecords[j-1] = temp;
+                }
+            }
+
+        }
+        return timerRecords; // return sorted version of timerRecords
+    }
+
+    //do the complexity requirements specify bubble sort + selection
+    // bubble sort to sort timerRecords array contents by duration from longest to shortest
+    public static TimerRecord[] sortRecordsByDuration(TimerRecord[] timerRecords) {
+        // boolean?
+        for (int i = 0; i < timerRecords.length; i++) {
+            for (int j = 1; j < timerRecords.length - i; j++) {
+                if (timerRecords[j].getSessionTime() < timerRecords[j-1].getSessionTime()) {
+                    TimerRecord temp = timerRecords[j];
+                    timerRecords[j] = timerRecords[j-1];
+                    timerRecords[j-1] = temp;
+                }
+            }
+        }
+
+
+    }
 }

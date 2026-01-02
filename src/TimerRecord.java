@@ -95,7 +95,6 @@ public class TimerRecord {
                 }
             }
         }
-
-
+        return timerRecords;
     }
 }

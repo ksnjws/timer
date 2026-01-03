@@ -79,6 +79,7 @@ public class TimerApplication extends JFrame {
         }
     }
 
+
     //TODO is this needed? (variables are unused)
     public static void main(String[] args) {
         LocalTime currentTime = LocalTime.now(); // to retrieve system timezone for clock display

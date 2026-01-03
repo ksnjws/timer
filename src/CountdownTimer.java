@@ -61,8 +61,7 @@ public class CountdownTimer extends TimerApplication {
         stopCountdownButton = new JButton("Stop & Save");
         resetCountdownButton = new JButton("Reset");
 
-        JPanel countdownRecord = new JPanel();
-
+        
         countdownButtons.add(startCountdownButton);
         countdownButtons.add(pauseCountdownButton);
         countdownButtons.add(stopCountdownButton);

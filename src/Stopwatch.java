@@ -66,7 +66,7 @@ public class Stopwatch extends TimerApplication {
                 break;
             }
             String record = String.format("Date: %s, %s seconds", timerRecord.getDateTime().toString(), timerRecord.getSessionTime()); // formatting string
-            stringBuilder.append(record).append("\n");
+            stringBuilder.append(record).append("\n"); // add on new record onto the existing string builder and moving onto the next line
         }
         logDisplayArea.setText(stringBuilder.toString()); // convert string builder into a big string to be displayed in the text area
 
@@ -136,20 +136,7 @@ public class Stopwatch extends TimerApplication {
             updateStopwatch(); // Update the stopwatch display one last time before saving it to the session log
         }
 
-        // Setting up content to be saved to the session log
-        //LocalDateTime dateTimeTracked = LocalDateTime.now();
-
-
-        //String stopwatchEntry = String.format("%s,%d,%d", dateTimeTracked.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), timerType.getInt(),totalSeconds);
-
-        // IO exception to write session information to session log
-        //try (FileWriter writer = new FileWriter("Timer-Log.txt", true)) {
-        //    writer.write(stopwatchEntry + System.lineSeparator());
-        //} catch (IOException e) {
-        //    System.err.println("Error saving session: " + e.getMessage()); // Output error message
-        //}
-
-        // Saving record using TimerRecord saveRecord method
+        // Saving record using TimerRecord saveRecord method defined in TimerRecord class
         TimerRecord.saveRecord(timerType, totalSeconds);
 
         stopButton.setEnabled(false);

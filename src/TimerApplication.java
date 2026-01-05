@@ -92,5 +92,4 @@ public class TimerApplication extends JFrame {
             app.setVisible(true);
         });
     }
-
 }

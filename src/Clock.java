@@ -32,7 +32,7 @@ public class Clock extends TimerApplication {
     private void updateClock() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Calendar cal = Calendar.getInstance();
-        clockLabel.setText("123456");
+        clockLabel.setText("123456"); //todo FIX CLOCK CLASS
     }
 }
 

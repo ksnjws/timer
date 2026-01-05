@@ -45,17 +45,6 @@ public class Stopwatch extends TimerApplication {
         buttons.add(resetButton);
         stopwatchPanel.add(buttons, BorderLayout.CENTER);
 
-        // JPanel logDisplay = new JPanel(new GridLayout(0,1));
-        //for (TimerRecord timerRecord : TimerRecord.timerRecords) {
-        //    if (timerRecord == null){
-        //        break;
-        //    }
-        //    String record = String.format("Date: %s, %s seconds", timerRecord.getDateTime().toString(), timerRecord.getSessionTime());
-        //    JTextField textField = new JTextField(record);
-        //    logDisplay.add(textField);
-        //}
-        //stopwatchPanel.add(logDisplay, BorderLayout.SOUTH);
-
         JTextArea logDisplayArea = new JTextArea(4,50);
         logDisplayArea.setEditable(false);
         logDisplayArea.setLineWrap(true);

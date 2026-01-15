@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
+import java.io.*;
 
 public class TimerRecord {
     public static TimerRecord[] timerRecords = new TimerRecord[100];
@@ -71,6 +72,14 @@ public class TimerRecord {
             }
         } catch (FileNotFoundException e){
             System.out.println("File not found");
+        }
+    }
+
+    public static void clearHistory() {
+        try (FileWriter filewriter = new FileWriter("Timer-Log.txt", false)) {
+            filewriter.write("");
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 

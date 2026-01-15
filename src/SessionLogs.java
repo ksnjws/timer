@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SessionLogs extends JPanel {
+    private JButton clearHistoryButton;
 
     public JPanel createSessionLogsPanel() {
         JPanel sessionLogs = new JPanel(new BorderLayout());
@@ -25,6 +26,17 @@ public class SessionLogs extends JPanel {
         JScrollPane displayPane = new JScrollPane(logDisplayArea); // placing the text area displaying all records into a scroll pane so it doesn't cover up the buttons
         sessionLogs.add(displayPane, BorderLayout.CENTER); // adding the scroll pane to the logs panel
 
+        JPanel buttons = new JPanel();
+        clearHistoryButton = new JButton("Clear History");
+        clearHistoryButton.addActionListener(e -> {TimerRecord.clearHistory(); logDisplayArea.setText("");}); // immediately clear all text in logDisplayArea and also link button to clearHistory method in TimerRecord class
+
+
+        buttons.add(clearHistoryButton);
+        sessionLogs.add(buttons, BorderLayout.NORTH);
+
+
         return sessionLogs;
+
     }
+
 }

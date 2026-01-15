@@ -110,10 +110,8 @@ public class CountdownTimer extends TimerApplication {
 
     public void startCountdown() {
 
-        if (!isRunning) {
+        if (!isRunning && timeRemaining > 0) { // start button can be run if it countdown is not currently running and there is still time left
             isRunning = true;
-
-            timeRemaining = totalSeconds;
 
             startCountdownButton.setEnabled(false);
             stopCountdownButton.setEnabled(true);
@@ -136,7 +134,9 @@ public class CountdownTimer extends TimerApplication {
                     }
                     SwingUtilities.invokeLater(() -> {
                         updateCountdownTimer();
-                        stopCountdown(); // add method to reset countdown after countdown ends (when timeRemaining < 0)
+                        if (timeRemaining == 0) { // only stop countdown if the timeRemaining is zero
+                            stopCountdown(); // add method to reset countdown after countdown ends (when timeRemaining < 0)
+                        }
                     });
                 }
             });
@@ -145,7 +145,14 @@ public class CountdownTimer extends TimerApplication {
     }
 
     public void pauseCountdown() {
+        if (isRunning) {
+            isRunning = false; // stop countdown from running
 
+            pauseCountdownButton.setEnabled(false);
+            startCountdownButton.setEnabled(true);
+            stopCountdownButton.setEnabled(true);
+            resetCountdownButton.setEnabled(true);
+        }
     }
 
     public void stopCountdown() {

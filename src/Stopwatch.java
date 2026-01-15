@@ -54,7 +54,7 @@ public class Stopwatch extends TimerApplication {
             if (timerRecord == null) {
                 break;
             }
-            String record = String.format("Date: %s, %s seconds", timerRecord.getDateTime().toString(), timerRecord.getSessionTime()); // formatting string
+            String record = String.format("Date: %s, %s seconds", timerRecord.getFormattedDateTime(), timerRecord.getSessionTime()); // formatting string
             stringBuilder.append(record).append("\n"); // add on new record onto the existing string builder and moving onto the next line
         }
         logDisplayArea.setText(stringBuilder.toString()); // convert string builder into a big string to be displayed in the text area

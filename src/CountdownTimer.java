@@ -213,7 +213,7 @@ public class CountdownTimer extends TimerApplication {
     }
 
     public void updateCountdownTimer() {
-        // Using inherited hour/minute/second variables to display remaining time
+        // Using inherited hour/minute/second variables to display remaining time //todo ????
 
         // Preventing any negatives in the hour/minute/second display using math.max
         hour = (int) (Math.max(timeRemaining, 0) / 3600); // converting seconds to hours

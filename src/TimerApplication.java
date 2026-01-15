@@ -52,7 +52,7 @@ public class TimerApplication extends JFrame {
         clockTimer.start();
 
         clockLabel = new JLabel("", SwingConstants.CENTER);
-        clockLabel.setFont(new Font("Monospaced", Font.PLAIN, 40));
+        clockLabel.setFont(new Font("Arial", Font.PLAIN, 40));
     }
 
 

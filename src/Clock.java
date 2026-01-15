@@ -11,8 +11,6 @@ public class Clock extends TimerApplication {
 
     public Clock(int hour, int minute, int second) {
         super(hour, minute, second);
-        //this.timezone = TimeZone.getDefault().getID();
-
     }
     public JPanel createClockPanel() {
         JPanel clockPanel = new JPanel(new BorderLayout());
@@ -32,7 +30,7 @@ public class Clock extends TimerApplication {
     private void updateClock() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Calendar cal = Calendar.getInstance();
-        clockLabel.setText("123456"); //todo FIX CLOCK CLASS
+        clockLabel.setText("123456");
     }
 }
 

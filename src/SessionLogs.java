@@ -2,41 +2,56 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SessionLogs extends JPanel {
-    private JButton clearHistoryButton;
+    private JButton clearHistoryButton, sortByDateTimeButton, sortByDurationButton;
+    private JTextArea logDisplayArea;
 
     public JPanel createSessionLogsPanel() {
         JPanel sessionLogs = new JPanel(new BorderLayout());
         sessionLogs.setBorder(BorderFactory.createEmptyBorder(10, 10, 25, 10));
 
-
-        JTextArea logDisplayArea = new JTextArea(20, 50);
+        // text area setup
+        logDisplayArea = new JTextArea(20, 50);
         logDisplayArea.setEditable(false);
         logDisplayArea.setLineWrap(true);
 
-        StringBuilder stringBuilder = new StringBuilder(); // string builder to loop through TimerRecords array and format into string to be displayed
-        for (TimerRecord timerRecord : TimerRecord.timerRecords) {
-            if (timerRecord == null) {
-                break;
-            }
-            String record = String.format("Date: %s, %s seconds", timerRecord.getFormattedDateTime(), timerRecord.getSessionTime()); // formatting string
-            stringBuilder.append(record).append("\n"); // add on new record onto the existing string builder and moving onto the next line
-        }
-        logDisplayArea.setText(stringBuilder.toString()); // convert string builder into a big string to be displayed in the text area
+        // scroll pane to display many rows of records
+        JScrollPane displayPane = new JScrollPane(logDisplayArea);
+        sessionLogs.add(displayPane, BorderLayout.CENTER);
 
-        JScrollPane displayPane = new JScrollPane(logDisplayArea); // placing the text area displaying all records into a scroll pane so it doesn't cover up the buttons
-        sessionLogs.add(displayPane, BorderLayout.CENTER); // adding the scroll pane to the logs panel
-
+        // button panel containing sessionLogs panel buttons
         JPanel buttons = new JPanel();
         clearHistoryButton = new JButton("Clear History");
         clearHistoryButton.addActionListener(e -> {TimerRecord.clearHistory(); logDisplayArea.setText("");}); // immediately clear all text in logDisplayArea and also link button to clearHistory method in TimerRecord class
 
+        sortByDateTimeButton = new JButton("Sort by date/time");
+        sortByDateTimeButton.addActionListener(e -> {TimerRecord.sortRecordsByDateTime(TimerRecord.timerRecords); updateRecords();});
+
+        sortByDurationButton = new JButton("Sort by duration");
+        sortByDurationButton.addActionListener(e -> {TimerRecord.sortRecordsByDuration(TimerRecord.timerRecords); updateRecords();});
 
         buttons.add(clearHistoryButton);
+        buttons.add(sortByDateTimeButton);
+        buttons.add(sortByDurationButton);
         sessionLogs.add(buttons, BorderLayout.NORTH);
 
-
+        updateRecords();
         return sessionLogs;
 
+    }
+
+    public void updateRecords() {
+        // string builder to loop through TimerRecords array and format into string to be displayed
+        StringBuilder stringBuilder = new StringBuilder();
+        for (TimerRecord timerRecord : TimerRecord.timerRecords) {
+            if (timerRecord == null) {
+                break;
+            }
+            // format of how the timerrecord string should be saved
+            String record = String.format("Date: %s, %s seconds", timerRecord.getFormattedDateTime(), timerRecord.getSessionTime());
+            stringBuilder.append(record).append("\n"); // skips a line
+        }
+        // convert string builder into a big existing string to be displayed in the text area
+        logDisplayArea.setText(stringBuilder.toString());
     }
 
 }

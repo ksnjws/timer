@@ -17,6 +17,7 @@ public class TimerApplication extends JFrame {
     private javax.swing.Timer clockTimer;
     public JLabel clockLabel;
 
+    private SessionLogs sessionLogs;
 
     public TimerApplication() {
         this.hour = 0;
@@ -35,7 +36,7 @@ public class TimerApplication extends JFrame {
         Clock clock = new Clock(hour, minute, second);
         Stopwatch stopwatch = new Stopwatch(hour, minute, second);
         CountdownTimer countdownTimer = new CountdownTimer(hour, minute, second);
-        SessionLogs sessionLogs = new SessionLogs();
+        sessionLogs = new SessionLogs();
 
         tabbedPane.addTab("Clock", clock.createClockPanel());
         tabbedPane.addTab("Stopwatch", stopwatch.createStopwatchPanel());

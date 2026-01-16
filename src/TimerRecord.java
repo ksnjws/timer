@@ -85,7 +85,6 @@ public class TimerRecord {
 
     // bubble sort to sort timerRecords array contents by date and time in descending order (from most recent)
     public static TimerRecord[] sortRecordsByDateTime(TimerRecord[] timerRecords) {
-        //should i include boolean sorted
         for (int i = 0; i < timerRecords.length-1; i++) {
             for (int j = 0; j < timerRecords.length-1; j++) { // is this sorting correct
                 if (timerRecords[j].getDateTime().isBefore(timerRecords[j+1].getDateTime())) {
@@ -99,7 +98,6 @@ public class TimerRecord {
         return timerRecords; // return sorted version of timerRecords
     }
 
-    //do the complexity requirements specify bubble sort + selection
     // bubble sort to sort timerRecords array contents by duration from longest to shortest
     public static TimerRecord[] sortRecordsByDuration(TimerRecord[] timerRecords) {
         // boolean?

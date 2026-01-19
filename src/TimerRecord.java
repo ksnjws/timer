@@ -13,7 +13,7 @@ public class TimerRecord {
     private String formattedDateTime;
 
     public TimerRecord(String dateTime, TimerType timerType, long sessionTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(Locale.CHINA);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(Locale.US);
         this.dateTime = LocalDateTime.parse(dateTime);
         this.formattedDateTime = this.dateTime.format(formatter);
         this.timerType = timerType;

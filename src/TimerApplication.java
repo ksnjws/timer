@@ -33,10 +33,10 @@ public class TimerApplication extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        Clock clock = new Clock(hour, minute, second);
-        Stopwatch stopwatch = new Stopwatch(hour, minute, second);
-        CountdownTimer countdownTimer = new CountdownTimer(hour, minute, second);
         sessionLogs = new SessionLogs();
+        Clock clock = new Clock(hour, minute, second);
+        Stopwatch stopwatch = new Stopwatch(hour, minute, second, sessionLogs);
+        CountdownTimer countdownTimer = new CountdownTimer(hour, minute, second, sessionLogs);
 
         tabbedPane.addTab("Clock", clock.createClockPanel());
         tabbedPane.addTab("Stopwatch", stopwatch.createStopwatchPanel());

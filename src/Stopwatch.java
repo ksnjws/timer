@@ -17,10 +17,12 @@ public class Stopwatch extends TimerApplication {
     private String dateTimeTracked;
     private String totalTrackedTime;
     private String formattedStopwatchTime;
+    private SessionLogs sessionLogs;
 
 
-    public Stopwatch(int hour, int minute, int second) {
+    public Stopwatch(int hour, int minute, int second, SessionLogs sessionLogs) {
         super(hour, minute, second);
+        this.sessionLogs = sessionLogs;
     }
 
     public JPanel createStopwatchPanel() {
@@ -110,6 +112,9 @@ public class Stopwatch extends TimerApplication {
 
         // Saving record using TimerRecord saveRecord method defined in TimerRecord class
         TimerRecord.saveRecord(timerType, totalSeconds);
+
+        //Updating the instantiated sessionLogs (SessionLogs object) in the Stopwatch class
+        sessionLogs.updateRecords();
 
         stopButton.setEnabled(false);
         resetButton.setEnabled(false);

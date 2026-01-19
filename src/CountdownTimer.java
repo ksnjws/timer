@@ -17,10 +17,12 @@ public class CountdownTimer extends TimerApplication {
     private String formattedCountdownTime;
     private long timeCounted;
     private boolean logSaved; // flag to prevent session log saving twice
+    private SessionLogs sessionLogs;
 
 
-    public CountdownTimer(int hour, int minute, int second) {
+    public CountdownTimer(int hour, int minute, int second, SessionLogs sessionLogs) {
         super(hour, minute, second);
+        this.sessionLogs = sessionLogs;
     }
 
     public JPanel createCountdownPanel() {
@@ -178,6 +180,10 @@ public class CountdownTimer extends TimerApplication {
 
         // Saving record using TimerRecord saveRecord method
         TimerRecord.saveRecord(timerType, timeCounted);
+
+        //Updating the instantiated sessionLogs (SessionLogs object) in the CountdownTimer class
+        sessionLogs.updateRecords();
+
 
         // Resetting countdown display and time values to 00.00.00
         countdownHour = 0;

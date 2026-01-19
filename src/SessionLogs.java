@@ -10,7 +10,7 @@ public class SessionLogs extends JPanel {
         sessionLogs.setBorder(BorderFactory.createEmptyBorder(10, 10, 25, 10));
 
         // text area setup
-        logDisplayArea = new JTextArea(20, 50);
+        logDisplayArea = new JTextArea(20, 70);
         logDisplayArea.setEditable(false);
         logDisplayArea.setLineWrap(true);
 
@@ -46,8 +46,9 @@ public class SessionLogs extends JPanel {
             if (timerRecord == null) {
                 break;
             }
-            // format of how the timerrecord string should be saved
-            String record = String.format("Date: %s, %s seconds", timerRecord.getFormattedDateTime(), timerRecord.getSessionTime());
+
+            // format of how session record is displayed, including the session date and time, timer type, and session duration
+            String record = String.format("Date: %s, Type: %s, %s seconds", timerRecord.getFormattedDateTime(), timerRecord.getTimerType(), timerRecord.getSessionTime());
             stringBuilder.append(record).append("\n"); // skips a line
         }
         // convert string builder into a big existing string to be displayed in the text area

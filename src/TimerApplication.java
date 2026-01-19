@@ -33,6 +33,7 @@ public class TimerApplication extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // instantiating tabs
         sessionLogs = new SessionLogs();
         Clock clock = new Clock(hour, minute, second);
         Stopwatch stopwatch = new Stopwatch(hour, minute, second, sessionLogs);
@@ -63,23 +64,6 @@ public class TimerApplication extends JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         clockLabel.setText(sdf.format(cal.getTime())); // displays time (Must be deleted)
-    }
-
-    public void playSound(){
-        try {
-            File timerSound = new File("mixkit-interface-hint-notification-911.wav"); // Sound downloaded from mixkit.co
-            AudioInputStream audio = AudioSystem.getAudioInputStream(timerSound);
-            Clip clipPlayer = AudioSystem.getClip();
-            clipPlayer.open(audio); // Load audio stream data
-            clipPlayer.setFramePosition(0); // Set clip starting position to beginning
-            clipPlayer.start(); // Play audio clip
-
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            System.out.println("Sound cannot be played");
-            //TODO should i use a normal error output or printStackTrace
-            //e.printStackTrace(); // Log error to System.err
-
-        }
     }
 
 

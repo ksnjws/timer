@@ -1,8 +1,7 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class CountdownTimer extends TimerApplication {
     public static final TimerType timerType = TimerType.COUNTDOWN; // setting enum value for countdown timer
@@ -18,6 +17,7 @@ public class CountdownTimer extends TimerApplication {
     private long timeCounted;
     private boolean logSaved; // flag to prevent session log saving twice
     private SessionLogs sessionLogs;
+    private boolean playSound = true;
 
 
     public CountdownTimer(int hour, int minute, int second, SessionLogs sessionLogs) {
@@ -63,6 +63,8 @@ public class CountdownTimer extends TimerApplication {
         stopCountdownButton = new JButton("Stop & Save");
         resetCountdownButton = new JButton("Reset");
 
+        // checkbox to display sound status, play sound by default
+        JCheckBox soundToggle = new JCheckBox("Play sound", true);
         
         countdownButtons.add(startCountdownButton);
         countdownButtons.add(pauseCountdownButton);
@@ -70,12 +72,19 @@ public class CountdownTimer extends TimerApplication {
         countdownButtons.add(resetCountdownButton);
         countdownPanel.add(countdownButtons, BorderLayout.SOUTH);
 
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(countdownButtons, BorderLayout.CENTER);
+        panel.add(soundToggle, BorderLayout.SOUTH);
+
+        countdownPanel.add(panel, BorderLayout.SOUTH);
+
         // Linking buttons to corresponding countdown methods
         startCountdownButton.addActionListener(e -> startCountdown());
         pauseCountdownButton.addActionListener(e -> pauseCountdown());
         stopCountdownButton.addActionListener(e -> stopCountdown());
         resetCountdownButton.addActionListener(e -> resetCountdown());
         setTimeButton.addActionListener(e -> setCountdownTime());
+        soundToggle.addActionListener(e -> {playSound = soundToggle.isSelected();});
 
         setTimeButton.setEnabled(true);
         startCountdownButton.setEnabled(false);
@@ -184,6 +193,8 @@ public class CountdownTimer extends TimerApplication {
         //Updating the instantiated sessionLogs (SessionLogs object) in the CountdownTimer class
         sessionLogs.updateRecords();
 
+        //Call playSound() method
+        playSound();
 
         // Resetting countdown display and time values to 00.00.00
         countdownHour = 0;
@@ -238,8 +249,23 @@ public class CountdownTimer extends TimerApplication {
         countdownTimeLabel.setText(formattedCountdownTime);
         //a
     }
+    public void playSound(){
+        if (playSound) {
+            try {
+                File timerSound = new File("mixkit-interface-hint-notification-911.wav"); // Sound downloaded from mixkit.co
+                AudioInputStream audio = AudioSystem.getAudioInputStream(timerSound);
+                Clip clipPlayer = AudioSystem.getClip();
+                clipPlayer.open(audio); // Load audio stream data
+                clipPlayer.setFramePosition(0); // Set clip starting position to beginning
+                clipPlayer.start(); // Play audio clip
 
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                System.out.println("Sound cannot be played");
+                e.printStackTrace(); // Log error to System.err
+
+            }
+        }
+
+    }
 
 }
-
-//TODO add playSound method

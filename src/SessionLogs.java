@@ -21,7 +21,29 @@ public class SessionLogs extends JPanel {
         // search panel
         JPanel searchPanel = new JPanel(new BorderLayout());
         JTextField searchBar = new JTextField();
+
         JButton searchButton = new JButton("Search");
+        searchButton.addActionListener(e -> {
+            // convert searchBar input into a string
+            String input = searchBar.getText();
+
+            // save the results found into searchResults TimerRecord array
+            TimerRecord[] searchResults = TimerRecord.linearSearch(TimerRecord.timerRecords, input);
+
+            if (searchResults.length > 0) {
+                // converting searchResults content into a string using a string builder
+                StringBuilder resultsBuilder = new StringBuilder();
+                for (int i = 0; i < searchResults.length; i++) {
+                    TimerRecord displayRecord = searchResults[i];
+                    resultsBuilder.append(String.format("Date: %s, Type: %s, %s seconds\n", displayRecord.getFormattedDateTime(), displayRecord.getTimerType(), displayRecord.getSessionTime()));
+                    //resultsBuilder.append(displayRecord).append("\n");
+                }
+                // display in the logDisplayArea
+                logDisplayArea.setText(resultsBuilder.toString());
+            } else {
+                logDisplayArea.setText("No results.");
+            }
+        });
         searchPanel.add(searchBar, BorderLayout.CENTER);
         searchPanel.add(searchButton, BorderLayout.EAST);
 
@@ -65,6 +87,7 @@ public class SessionLogs extends JPanel {
         }
         // convert string builder into a big existing string to be displayed in the text area
         logDisplayArea.setText(stringBuilder.toString());
+
     }
 
 }

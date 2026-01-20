@@ -113,6 +113,35 @@ public class TimerRecord {
         return timerRecords;
     }
 
+    //todo 20/1/26
+
+
     // linear search t operate search bar to search through saved TimerRecord objects
+    public static TimerRecord[] linearSearch(TimerRecord[] timerRecords, String input) {
+
+        // convert input to lowercase to prevent case sensitivity
+        String lowercaseInput = input.toLowerCase();
+        TimerRecord[] searchResults = new TimerRecord[timerRecords.length];
+        int j = 0;
+
+        for (int i = 0; i < timerRecords.length && timerRecords[i] != null; i++) {
+            // record format so the search function can identify the format in the sessionlogs
+            String recordFormat = String.format("Date: %s, Type: %s, %s seconds", timerRecords[i].getFormattedDateTime(), timerRecords[i].getTimerType(), timerRecords[i].getSessionTime());
+
+            // checking for match and converting record to lowercase to prevent case sensitivity
+            if (recordFormat.toLowerCase().contains(lowercaseInput)) {
+                searchResults[j++] = timerRecords[i];
+            }
+        }
+        TimerRecord[] displayResults = new TimerRecord[j];
+        System.arraycopy(searchResults, 0, displayResults, 0, j);
+        return displayResults;
+    }
+
+    // override toString() to prevent display of hashcode on timerRecords to enhance readability
+    @Override
+    public String toString() {
+        return String.format("Date: %s, Type: %s, %s seconds", getFormattedDateTime(), getTimerType(), getSessionTime());
+    }
 
 }

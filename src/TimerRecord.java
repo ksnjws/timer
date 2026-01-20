@@ -112,4 +112,7 @@ public class TimerRecord {
         }
         return timerRecords;
     }
+
+    // linear search t operate search bar to search through saved TimerRecord objects
+
 }

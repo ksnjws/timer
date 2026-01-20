@@ -18,6 +18,13 @@ public class SessionLogs extends JPanel {
         JScrollPane displayPane = new JScrollPane(logDisplayArea);
         sessionLogs.add(displayPane, BorderLayout.CENTER);
 
+        // search panel
+        JPanel searchPanel = new JPanel(new BorderLayout());
+        JTextField searchBar = new JTextField();
+        JButton searchButton = new JButton("Search");
+        searchPanel.add(searchBar, BorderLayout.CENTER);
+        searchPanel.add(searchButton, BorderLayout.EAST);
+
         // button panel containing sessionLogs panel buttons
         JPanel buttons = new JPanel();
         clearHistoryButton = new JButton("Clear History");
@@ -32,8 +39,13 @@ public class SessionLogs extends JPanel {
         buttons.add(clearHistoryButton);
         buttons.add(sortByDateTimeButton);
         buttons.add(sortByDurationButton);
-        sessionLogs.add(buttons, BorderLayout.NORTH);
 
+        // top panel containing the upper components
+        JPanel top = new JPanel(new BorderLayout());
+        top.add(searchPanel, BorderLayout.NORTH);
+        top.add(buttons, BorderLayout.SOUTH);
+
+        sessionLogs.add(top, BorderLayout.NORTH);
         updateRecords();
         return sessionLogs;
 

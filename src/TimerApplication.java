@@ -13,11 +13,10 @@ public class TimerApplication extends JFrame {
     protected int minute; // minute field for timer
     protected int second; // second field for timer
     private JTabbedPane tabbedPane;
-
     private javax.swing.Timer clockTimer;
     public JLabel clockLabel;
-
     private SessionLogs sessionLogs;
+    private boolean loginSuccessful = false;
 
     public TimerApplication() {
         this.hour = 0;
@@ -27,6 +26,12 @@ public class TimerApplication extends JFrame {
         TimerRecord.readRecord();
 
         tabbedPane = new JTabbedPane();
+
+        // use of selection to call showLogin(), only construct rest of TimerApplication UI if login is succssful
+        if (!showLogin()) {
+            dispose(); // dispose of window
+            return;
+        }
 
         setTitle("Timer Application");
         setSize(500,350);
@@ -59,6 +64,44 @@ public class TimerApplication extends JFrame {
         clockLabel.setFont(new Font("Arial", Font.PLAIN, 40));
     }
 
+    // login boolean for login page display
+    private boolean showLogin() {
+        // set up of login window using JDialog
+        JDialog loginWindow = new JDialog(this, "Login", true);
+        loginWindow.setSize(500, 350);
+        loginWindow.setLocationRelativeTo(this);
+
+        JPanel loginPanel = new JPanel(new GridLayout(2,2));
+        JTextField usernameField = new JTextField();
+        JPasswordField passwordField = new JPasswordField();
+        JButton loginButton = new JButton("Login");
+
+        loginButton.addActionListener(e -> {
+            String inputUsername = usernameField.getText();
+            String inputPassword = passwordField.getText();
+
+            // check if input equals the hardcoded user and password
+            if (inputUsername.equals("User1") && inputPassword.equals("password")) {
+                // set loginSuccessful as true if user and password are correct
+                loginSuccessful = true;
+                loginWindow.dispose();
+            }
+            else {
+                // display error message in a message dialog
+                JOptionPane.showMessageDialog(loginWindow, "Invalid username/password!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        loginPanel.add(new JLabel("Username: "));
+        loginPanel.add(usernameField);
+        loginPanel.add(new JLabel("Password: "));
+        loginPanel.add(passwordField);
+
+        loginWindow.add(loginPanel, BorderLayout.NORTH);
+        loginWindow.add(loginButton, BorderLayout.SOUTH);
+
+        loginWindow.setVisible(true);
+        return loginSuccessful;
+    }
 
     private void updateClock() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -66,8 +109,6 @@ public class TimerApplication extends JFrame {
         clockLabel.setText(sdf.format(cal.getTime())); // displays time (Must be deleted)
     }
 
-
-    //TODO is this needed? (variables are unused)
     public static void main(String[] args) {
         LocalTime currentTime = LocalTime.now(); // to retrieve system timezone for clock display
         int hour = currentTime.getHour();

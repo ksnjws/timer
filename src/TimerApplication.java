@@ -1,7 +1,4 @@
 import javax.swing.*;
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -67,7 +64,7 @@ public class TimerApplication extends JFrame {
     // login boolean for login page display
     private boolean showLogin() {
         // set up of login window using JDialog
-        JDialog loginWindow = new JDialog(this, "Login", true);
+        JDialog loginWindow = new JDialog(this, "Timer Application Login", true);
         loginWindow.setSize(500, 350);
         loginWindow.setLocationRelativeTo(this);
 

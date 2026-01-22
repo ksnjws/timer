@@ -1,10 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.io.FileWriter;
-
 
 public class Stopwatch extends TimerApplication {
     public static final TimerType timerType = TimerType.STOPWATCH; // setting enum value for stopwatch

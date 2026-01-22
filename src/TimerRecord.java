@@ -3,7 +3,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
-import java.io.*;
 
 public class TimerRecord {
     public static TimerRecord[] timerRecords = new TimerRecord[100];
@@ -85,8 +84,15 @@ public class TimerRecord {
 
     // bubble sort to sort timerRecords array contents by date and time in descending order (from most recent)
     public static TimerRecord[] sortRecordsByDateTime(TimerRecord[] timerRecords) {
-        for (int i = 0; i < timerRecords.length-1; i++) {
-            for (int j = 0; j < timerRecords.length-1; j++) { // is this sorting correct
+        int total = 0;
+        for (int k = 0; k < timerRecords.length; k++) {
+            TimerRecord records = timerRecords[k];
+            if (records != null) {
+                total++;
+            }
+        }
+        for (int i = 0; i < total-1; i++) {
+            for (int j = 0; j < total-1; j++) { // is this sorting correct
                 if (timerRecords[j].getDateTime().isBefore(timerRecords[j+1].getDateTime())) {
                     TimerRecord temp = timerRecords[j];
                     timerRecords[j] = timerRecords[j+1];
@@ -100,10 +106,16 @@ public class TimerRecord {
 
     // bubble sort to sort timerRecords array contents by duration from longest to shortest
     public static TimerRecord[] sortRecordsByDuration(TimerRecord[] timerRecords) {
-        // boolean?
-        for (int i = 0; i < timerRecords.length-1; i++) {
-            for (int j = 0; j < timerRecords.length-1; j++) {
-                if (timerRecords[j].getSessionTime() > timerRecords[j+1].getSessionTime()) {
+        int total = 0;
+        for (int k = 0; k < timerRecords.length; k++) {
+            TimerRecord records = timerRecords[k];
+            if (records != null) {
+                total++;
+            }
+        }
+        for (int i = 0; i < total-1; i++) {
+            for (int j = 0; j < total-1; j++) {
+                if (timerRecords[j].getSessionTime() < timerRecords[j+1].getSessionTime()) {
                     TimerRecord temp = timerRecords[j];
                     timerRecords[j] = timerRecords[j+1];
                     timerRecords[j+1] = temp;
@@ -112,9 +124,6 @@ public class TimerRecord {
         }
         return timerRecords;
     }
-
-    //todo 20/1/26
-
 
     // linear search t operate search bar to search through saved TimerRecord objects
     public static TimerRecord[] linearSearch(TimerRecord[] timerRecords, String input) {
@@ -125,7 +134,7 @@ public class TimerRecord {
         int j = 0;
 
         for (int i = 0; i < timerRecords.length && timerRecords[i] != null; i++) {
-            // record format so the search function can identify the format in the sessionlogs
+            // record format so the search function can identify the format in the sessionLogs
             String recordFormat = String.format("Date: %s, Type: %s, %s seconds", timerRecords[i].getFormattedDateTime(), timerRecords[i].getTimerType(), timerRecords[i].getSessionTime());
 
             // checking for match and converting record to lowercase to prevent case sensitivity

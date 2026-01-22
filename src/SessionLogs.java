@@ -9,7 +9,7 @@ public class SessionLogs extends JPanel {
         JPanel sessionLogs = new JPanel(new BorderLayout());
         sessionLogs.setBorder(BorderFactory.createEmptyBorder(10, 10, 25, 10));
 
-        // text area setup
+        // SessionLogs text area setup
         logDisplayArea = new JTextArea(20, 70);
         logDisplayArea.setEditable(false);
         logDisplayArea.setLineWrap(true);
@@ -18,7 +18,7 @@ public class SessionLogs extends JPanel {
         JScrollPane displayPane = new JScrollPane(logDisplayArea);
         sessionLogs.add(displayPane, BorderLayout.CENTER);
 
-        // search panel
+        // Instantiating searching components
         JPanel searchPanel = new JPanel(new BorderLayout());
         JTextField searchBar = new JTextField();
 
@@ -36,7 +36,6 @@ public class SessionLogs extends JPanel {
                 for (int i = 0; i < searchResults.length; i++) {
                     TimerRecord displayRecord = searchResults[i];
                     resultsBuilder.append(String.format("Date: %s, Type: %s, %s seconds\n", displayRecord.getFormattedDateTime(), displayRecord.getTimerType(), displayRecord.getSessionTime()));
-                    //resultsBuilder.append(displayRecord).append("\n");
                 }
                 // display in the logDisplayArea
                 logDisplayArea.setText(resultsBuilder.toString());
@@ -78,7 +77,7 @@ public class SessionLogs extends JPanel {
         StringBuilder stringBuilder = new StringBuilder();
         for (TimerRecord timerRecord : TimerRecord.timerRecords) {
             if (timerRecord == null) {
-                break;
+                continue;
             }
 
             // format of how session record is displayed, including the session date and time, timer type, and session duration

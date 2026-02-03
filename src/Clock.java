@@ -7,8 +7,6 @@ import java.time.LocalTime;
 
 public class Clock extends TimerApplication {
 
-    private String timezone;
-
     public Clock(int hour, int minute, int second) {
         super(hour, minute, second);
     }

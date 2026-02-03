@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SessionLogs extends JPanel {
-    private JButton clearHistoryButton, sortByDateTimeButton, sortByDurationButton;
+    private JButton clearHistoryButton;
+    private JButton sortByDateTimeButton;
+    private JButton sortByDurationButton;
     private JTextArea logDisplayArea;
 
     public JPanel createSessionLogsPanel() {
@@ -52,10 +54,10 @@ public class SessionLogs extends JPanel {
         clearHistoryButton.addActionListener(e -> {TimerRecord.clearHistory(); logDisplayArea.setText("");}); // immediately clear all text in logDisplayArea and also link button to clearHistory method in TimerRecord class
 
         sortByDateTimeButton = new JButton("Sort by date/time");
-        sortByDateTimeButton.addActionListener(e -> {TimerRecord.sortRecordsByDateTime(TimerRecord.timerRecords); updateRecords();});
+        sortByDateTimeButton.addActionListener(e -> {TimerRecord.sortByDateTime(TimerRecord.timerRecords); updateRecords();});
 
         sortByDurationButton = new JButton("Sort by duration");
-        sortByDurationButton.addActionListener(e -> {TimerRecord.sortRecordsByDuration(TimerRecord.timerRecords); updateRecords();});
+        sortByDurationButton.addActionListener(e -> {TimerRecord.sortByDuration(TimerRecord.timerRecords); updateRecords();});
 
         buttons.add(clearHistoryButton);
         buttons.add(sortByDateTimeButton);

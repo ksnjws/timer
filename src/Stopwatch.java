@@ -9,8 +9,6 @@ public class Stopwatch extends TimerApplication {
     private long stopwatchStartTime;
     private long totalSeconds;
     private JLabel stopwatchTimeLabel;
-    private String dateTimeTracked;
-    private String totalTrackedTime;
     private String formattedStopwatchTime;
     private SessionLogs sessionLogs;
 
@@ -148,7 +146,7 @@ public class Stopwatch extends TimerApplication {
         // Display elapsed time using inherited hour/minute/second variables
         hour = (int) (totalSeconds / 3600);
         minute = (int) (totalSeconds / 60);
-        second = (int) totalSeconds;
+        second = (int) totalSeconds % 60;
 
         // Setup for stopwatch display
         formattedStopwatchTime = String.format("%02d:%02d:%02d", hour, minute, second);

@@ -83,7 +83,7 @@ public class TimerRecord {
     }
 
     // bubble sort to sort timerRecords array contents by date and time in descending order (from most recent)
-    public static TimerRecord[] sortRecordsByDateTime(TimerRecord[] timerRecords) {
+    public static TimerRecord[] sortByDateTime(TimerRecord[] timerRecords) {
         int total = 0;
         for (int k = 0; k < timerRecords.length; k++) {
             TimerRecord records = timerRecords[k];
@@ -105,7 +105,7 @@ public class TimerRecord {
     }
 
     // bubble sort to sort timerRecords array contents by duration from longest to shortest
-    public static TimerRecord[] sortRecordsByDuration(TimerRecord[] timerRecords) {
+    public static TimerRecord[] sortByDuration(TimerRecord[] timerRecords) {
         int total = 0;
         for (int k = 0; k < timerRecords.length; k++) {
             TimerRecord records = timerRecords[k];

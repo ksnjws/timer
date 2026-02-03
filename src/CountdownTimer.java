@@ -121,7 +121,7 @@ public class CountdownTimer extends TimerApplication {
 
     public void startCountdown() {
 
-        if (!isRunning && timeRemaining > 0) { // start button can be run if it countdown is not currently running and there is still time left
+        if (!isRunning && timeRemaining > 0) { // start button can be run if countdown is not currently running and there is still time left
             isRunning = true;
 
             startCountdownButton.setEnabled(false);

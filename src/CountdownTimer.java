@@ -94,7 +94,7 @@ public class CountdownTimer extends TimerApplication {
         return countdownPanel;
     }
 
-    public void setCountdownTime() {
+    private void setCountdownTime() {
         if (!timeSet) {
 
             logSaved = false; // reset logSaved flag for new session
@@ -119,7 +119,7 @@ public class CountdownTimer extends TimerApplication {
         }
     }
 
-    public void startCountdown() {
+    private void startCountdown() {
 
         if (!isRunning && timeRemaining > 0) { // start button can be run if countdown is not currently running and there is still time left
             isRunning = true;
@@ -155,7 +155,7 @@ public class CountdownTimer extends TimerApplication {
         }
     }
 
-    public void pauseCountdown() {
+    private void pauseCountdown() {
         if (isRunning) {
             isRunning = false; // stop countdown from running
 
@@ -166,7 +166,7 @@ public class CountdownTimer extends TimerApplication {
         }
     }
 
-    public void stopCountdown() {
+    private void stopCountdown() {
         if (logSaved) {
             return; // exits method if log already saved
         }
@@ -211,7 +211,7 @@ public class CountdownTimer extends TimerApplication {
         updateCountdownTimer();
     }
 
-    public void resetCountdown() {
+    private void resetCountdown() {
         // pausing countdown
         isRunning = false;
 
@@ -236,7 +236,7 @@ public class CountdownTimer extends TimerApplication {
         timeSet = false;
     }
 
-    public void updateCountdownTimer() {
+    private void updateCountdownTimer() {
         // Using inherited hour/minute/second variables to display remaining time //todo ????
 
         // Preventing any negatives in the hour/minute/second display using math.max
@@ -249,7 +249,7 @@ public class CountdownTimer extends TimerApplication {
         countdownTimeLabel.setText(formattedCountdownTime);
         //a
     }
-    public void playSound(){
+    private void playSound(){
         if (playSound) {
             try {
                 File timerSound = new File("mixkit-interface-hint-notification-911.wav"); // Sound downloaded from mixkit.co

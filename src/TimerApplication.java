@@ -24,9 +24,9 @@ public class TimerApplication extends JFrame {
 
         tabbedPane = new JTabbedPane();
 
-        // use of selection to call showLogin(), only construct rest of TimerApplication UI if login is succssful
+        // use of selection to call showLogin() and only construct rest of TimerApplication UI if user login successful
         if (!showLogin()) {
-            dispose(); // dispose of window
+            dispose(); // dispose of the appliation window
             return;
         }
 

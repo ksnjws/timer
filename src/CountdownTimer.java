@@ -99,7 +99,7 @@ public class CountdownTimer extends TimerApplication {
 
             logSaved = false; // reset logSaved flag for new session
 
-            // Assigning original countdown time values to new variables from spinner inputs
+            // Assigning original countdown time values to new variables from inputs
             countdownHour = (int) hourSpinner.getValue();
             countdownMinute = (int) minuteSpinner.getValue();
             countdownSecond = (int) secondSpinner.getValue();
@@ -145,8 +145,8 @@ public class CountdownTimer extends TimerApplication {
                     }
                     SwingUtilities.invokeLater(() -> {
                         updateCountdownTimer();
-                        if (timeRemaining == 0) { // only stop countdown if the timeRemaining is zero
-                            stopCountdown(); // add method to reset countdown after countdown ends (when timeRemaining < 0)
+                        if (timeRemaining == 0) { // only stop countdown if timeRemaining is zero
+                            stopCountdown(); // add method to reset countdown after countdown ends (when timeRemaining less than 0)
                         }
                     });
                 }

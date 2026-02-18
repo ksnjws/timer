@@ -8,7 +8,7 @@ public enum TimerType {
         this.i = i;
     }
 
-    int getInt() { // method to retrieve timertype integer value
+    public int getInt() { // method to retrieve timertype integer value
         return i;
     }
 

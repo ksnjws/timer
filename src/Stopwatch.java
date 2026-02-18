@@ -75,7 +75,8 @@ public class Stopwatch extends TimerApplication {
                         });
                         try {
                             Thread.sleep(1000); // sleep for 1000 milliseconds
-                        } catch (InterruptedException e) {
+                        }
+                        catch (InterruptedException e) {
                             isRunning = false; // Pause stopwatch if interruption occurs
                             Thread.currentThread().interrupt();
 

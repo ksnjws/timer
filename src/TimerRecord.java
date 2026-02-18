@@ -52,25 +52,25 @@ public class TimerRecord {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             try {
                 String line;
-                int i = 0;
+                int i = 0; // keeping track of position in the timerRecords[] array
 
                 while ((line = bufferedReader.readLine()) != null) {
-                    String[] parts = line.split(","); // splitting timerlog line
+                    String[] parts = line.split(","); // splitting each line
 
                     try {
                         // converting formats in timerRecord object
                         timerRecords[i] = new TimerRecord(parts[0], TimerType.fromInt(Integer.parseInt(parts[1])), Long.parseLong(parts[2].trim()));
                         i++;
                     } catch (Exception parseE) {
-                        System.err.println("Parsing error");
+                        System.err.println("Parsing error"); // output errormessage
                     }
                 }
 
             } catch (IOException e) {
-                System.out.println("IO error");
+                System.out.println("IO error"); // output error message
             }
         } catch (FileNotFoundException e){
-            System.out.println("File not found");
+            System.out.println("File not found"); // output error message
         }
     }
 
@@ -92,7 +92,7 @@ public class TimerRecord {
             }
         }
         for (int i = 0; i < total-1; i++) {
-            for (int j = 0; j < total-1; j++) { // is this sorting correct
+            for (int j = 0; j < total-1; j++) {
                 if (timerRecords[j].getDateTime().isBefore(timerRecords[j+1].getDateTime())) {
                     TimerRecord temp = timerRecords[j];
                     timerRecords[j] = timerRecords[j+1];

@@ -83,7 +83,8 @@ public class SessionLogs extends JPanel {
             }
 
             // format of how session record is displayed, including the session date and time, timer type, and session duration
-            String record = String.format("Date: %s, Type: %s, %s seconds", timerRecord.getFormattedDateTime(), timerRecord.getTimerType(), timerRecord.getSessionTime());
+            String record = String.format("Date: %s, Type: %s, %s seconds", timerRecord.getFormattedDateTime(), timerRecord.getTimerType(),
+                    timerRecord.getSessionTime());
             stringBuilder.append(record).append("\n"); // skips a line
         }
         // convert string builder into a big existing string to be displayed in the text area

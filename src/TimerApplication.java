@@ -10,7 +10,6 @@ public class TimerApplication extends JFrame {
     protected int minute; // minute field for timer
     protected int second; // second field for timer
     private JTabbedPane tabbedPane;
-    private javax.swing.Timer clockTimer;
     public JLabel clockLabel;
     private SessionLogs sessionLogs;
     private boolean loginSuccessful = false;
@@ -54,9 +53,6 @@ public class TimerApplication extends JFrame {
         this.minute = minute;
         this.second = second;
 
-        clockTimer = new javax.swing.Timer(1000, e -> updateClock());
-        clockTimer.start();
-
         clockLabel = new JLabel("", SwingConstants.CENTER);
         clockLabel.setFont(new Font("Arial", Font.PLAIN, 40));
     }
@@ -98,12 +94,6 @@ public class TimerApplication extends JFrame {
 
         loginWindow.setVisible(true);
         return loginSuccessful;
-    }
-
-    private void updateClock() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        Calendar cal = Calendar.getInstance();
-        clockLabel.setText(sdf.format(cal.getTime())); // displays time (Must be deleted)
     }
 
     public static void main(String[] args) {

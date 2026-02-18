@@ -4,9 +4,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Clock extends TimerApplication {
+    private javax.swing.Timer clockTimer;
+    public JLabel clockLabel;
 
     public Clock(int hour, int minute, int second) {
         super(hour, minute, second);
+
+        clockLabel = new JLabel("", SwingConstants.CENTER);
+        clockLabel.setFont(new Font("Arial", Font.PLAIN, 40));
+
+        clockTimer = new javax.swing.Timer(1000, e -> updateClock());
+        clockTimer.start();
     }
     public JPanel createClockPanel() {
         JPanel clockPanel = new JPanel(new BorderLayout());
@@ -16,7 +24,7 @@ public class Clock extends TimerApplication {
         headerLabel.setFont(new Font("Arial", Font.PLAIN, 18));
 
         clockPanel.add(headerLabel, BorderLayout.NORTH);
-        clockPanel.add(super.clockLabel, BorderLayout.CENTER);
+        clockPanel.add(clockLabel, BorderLayout.CENTER);
 
         updateClock(); // Initialize with current time
 
@@ -26,7 +34,8 @@ public class Clock extends TimerApplication {
     private void updateClock() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Calendar cal = Calendar.getInstance();
-        clockLabel.setText("123456");
+        clockLabel.setText(sdf.format(cal.getTime())); // displays time
+
     }
 }
 

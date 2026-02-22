@@ -1,9 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.Calendar;
-
 
 public class TimerApplication extends JFrame {
     protected int hour; // hour field for timer application
@@ -97,11 +93,6 @@ public class TimerApplication extends JFrame {
     }
 
     public static void main(String[] args) {
-        LocalTime currentTime = LocalTime.now(); // to retrieve system timezone for clock display
-        int hour = currentTime.getHour();
-        int minute = currentTime.getMinute();
-        int second = currentTime.getSecond();
-
         SwingUtilities.invokeLater(() -> {
             TimerApplication app = new TimerApplication();
             app.setVisible(true);
